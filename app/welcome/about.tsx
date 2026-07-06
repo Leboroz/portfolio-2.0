@@ -1,23 +1,43 @@
+import { Environment, KeyboardControls, OrbitControls } from "@react-three/drei"
+import { Canvas } from "@react-three/fiber"
+import { Physics } from "@react-three/rapier"
+import { Rubik } from "~/components/rubik"
+
+
 export const About = (props: {}) => {
   return (
-    <section className="section bg-p2 pt-20 pb-50 text-p3">
-      <p className="text-5xl tracking-wide font-extralight font-inter mb-20">
-        I believe in a user centered design approach, ensuring that every project I work on is tailored
-        to meet the specific needs of its users.
-      </p>
-      <div className="flex justify-between border-t border-t-p3 pt-20">
-        <ul className="flex-1">
-          <li>
-            <p>3+</p>
-            <p>Years of experience</p>
-          </li>
-        </ul>
-        <p className="flex-1 text-2xl px-20">
-          I'm a frontend web developer dedicated to turning ideas into creative solutions. I specialize in creating
-          seamless and intuitive user experiences. My approach focuses on creating scalable, high-performing solutions
-          tailored to both user needs and business objectives. By prioritizing performance, accessibility, and responsiveness,
-          I strive to deliver experiences that not only engage users but also drive tangible results.
-        </p>
+    <section id="about" className="section container bg-p2 pt-20 pb-50 text-p3">
+      <div className="w-1/2 h-full cursor-grab">
+        <KeyboardControls map={[
+          { name: 'top', keys: ['KeyW'] },
+          { name: 'bottom', keys: ['KeyS'] },
+          { name: 'right', keys: ['KeyD'] },
+          { name: 'left', keys: ['KeyA'] },
+          { name: 'front', keys: ['KeyQ'] },
+          { name: 'back', keys: ['KeyE'] },
+          { name: 'counter', keys: ['ShiftLeft'] },
+        ]}
+        >
+          <RubikPanel />
+          <Canvas
+            camera={{
+              fov: 75,
+              near: 0.1,
+              far: 1000,
+              position: [
+                -6.170832126477689,
+                4.14290430247447,
+                4.988205176763846,
+              ],
+            }}
+            dpr={[1, 1.5]}
+          >
+            <OrbitControls />
+            <directionalLight position={[1, 2, 3]} intensity={4.5} />
+            <ambientLight intensity={4.5} />
+            <Rubik />
+          </Canvas>
+        </KeyboardControls>
       </div>
     </section>
   )

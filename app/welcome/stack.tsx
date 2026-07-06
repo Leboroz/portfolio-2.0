@@ -5,11 +5,11 @@ import { PageTitle } from "~/components/pageTitle"
 
 export const Stack = (props: {}) => {
   return (
-    <section className="section bg-p1">
+    <section id="expertise" className="section bg-p1">
       {/* Corrected spelling of "Expertise" and matched the Title component to your fonts */}
       <PageTitle title="- Expertise" />
 
-      <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-y-6 md:gap-y-0">
+      <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-y-2 md:gap-y-0">
         {Object.entries(MY_STACK).map(([techStackTitle, techStack]) => (
           <React.Fragment key={techStackTitle}>
             {/* Column 1: Category Title */}
@@ -18,7 +18,7 @@ export const Stack = (props: {}) => {
             </div>
 
             {/* Column 2: Skills Wrapper */}
-            <div className="flex flex-wrap gap-4 p-6 border-b border-p2/30 md:border-b-0 rounded-b-14 md:rounded-bl-none md:rounded-r-14  mb-8 md:mb-0">
+            <div className="flex flex-wrap gap-4 p-2 border-b border-p2/30 md:border-b-0 rounded-b-14 md:rounded-bl-none md:rounded-r-14 md:mb-0">
               {techStack.map((technology: tech) => (
                 <Skill
                   key={technology.name}

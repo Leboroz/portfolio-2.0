@@ -299,23 +299,72 @@ export const SERVICES = [
 
 export const MY_EXPERIENCE = [
   {
-    title: 'Software Engineer (Frontend)',
-    company: 'Strativ AB',
-    duration: 'Dec 2024 - Present',
+    company: {
+      name: 'Ensolvers',
+      location: 'Florida USA',
+      period: 'Mar 2025 - Feb 2026',
+    },
+    description: {
+      title: 'Software Developer',
+      archievements: [],
+      type: 'contract',
+    }
   },
   {
-    title: 'Frontend Developer',
-    company: 'Epikcoders',
-    duration: 'Oct 2023 - Nov 2024',
+    company: {
+      name: 'Territorio Digital S.A.S',
+      location: 'Bogota CO',
+      period: 'Sep 2022 - Mar 2025',
+    },
+    description: {
+      title: 'Software Developer',
+      archievements: [
+        '• Developed and maintained Light-Brain reporting system',
+        '• Collaborated with cross-functional teams to deliver data-driven solutions',
+        '• Contributed to the growth of the company\'s data analytics capabilities',
+      ],
+      type: 'contract',
+    }
   },
   {
-    title: 'Frontend Engineer',
-    company: 'Anchorblock Technology',
-    duration: 'Oct 2022 - Sep 2023',
-  },
-  {
-    title: 'Frontend Developer (Part-time)',
-    company: 'Branex IT',
-    duration: 'Jan 2022 - Oct 2022',
+    company: {
+      name: 'Ejam',
+      location: 'California USA',
+      period: 'Nov 2023 - Dec 2023',
+    },
+    description: {
+      title: 'Front-end Developer',
+      archievements: [],
+      type: 'contract',
+    }
   },
 ];
+
+export const LINKS = [
+  {
+    href: "#intro",
+    text: "Intro",
+  },
+  {
+    href: "#about",
+    text: "About",
+  },
+  {
+    href: "#expertise",
+    text: "Experties",
+  },
+  {
+    href: "#services",
+    text: "Services",
+  },
+  {
+    href: "#work",
+    text: "My Work",
+  },
+  {
+    href: "#contact",
+    text: "Contact",
+  },
+];
+
+export const START_DATE = '2023-06-28'

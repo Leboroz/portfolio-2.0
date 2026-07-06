@@ -1,10 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Special+Elite&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import "tailwindcss";
 
 @theme {
   --font-inter: "Inter", sans-serif;
   --font-poppins: "Poppins", sans-serif;
   --font-playfair: "Playfair Display", serif;
+  --font-elite: "Special Elite", serif;
 
   --color-p1: #091413;
   --color-p2: #285A48;
@@ -14,6 +15,7 @@
   --color-s2: #FFB400;
   --color-s3: #E3DCD2;
   --color-black-100: #05091D;
+  --color-gray: #9e9d9d;
 
   --spacing-22: 88px;
   --spacing-100: 100px;
@@ -29,19 +31,42 @@
 @layer base {
   html,
   body {
-    @apply bg-white dark:bg-p1;
+    @apply bg-p1;
 
     @media (prefers-color-scheme: dark) {
       color-scheme: dark;
     }
   }
+  
+  main, .container { 
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory; 
+    scroll-behavior: smooth;
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
-  .section {
-    @apply py-22 px-4;
+    -ms-overflow-style: none;
+    scrollbar-width: none;  
   }
 
+  use, path {
+    stroke-dasharray: none;
+    vector-effect: non-scaling-stroke;
+  }
+
+  section {
+    height: 100%;
+    width: 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;  
+    overflow: auto;
+  }
+
+
   body {
-    @apply font-poppins text-[16px] tracking-[-0.03em] text-p4;
+    @apply font-poppins text-[16px] tracking-[-0.03em] text-p4 text-black-100;
   }
 
   a {
@@ -62,23 +87,45 @@
 }
 
 @layer utilities {
-  /* START of Typography */
   .h-num {
     @apply font-inter text-[72px] font-bold leading-[84px];
+  }
+
+  .clip-path {
+    @apply w-[410px] h-[500px];
+    clip-path: url('#complex-shape');
+  }
+
+  .content {
+    @apply  w-full h-full pt-37;
   }
 
   .h1, .h2, .h3, .h4, .h5, .h6 {
     @apply font-playfair relative;
   }
 
-.h1::after {
-  content: "";
-  @apply absolute left-0 -bottom-5 h-2 w-12 bg-s2;
-}
+  .h1::after {
+    content: "";
+    @apply absolute left-0 -bottom-5 h-2 w-12 bg-s2;
+  }
 
-.subheading {
-  @apply text-2xl font-inter text-s2;
-}
+  .subheading {
+    @apply text-2xl font-inter text-s2;
+  }
+
+  .bottom-div, .top-div {
+    @apply relative;
+  }
+
+  .top-div::before {
+    content: '<div>';
+    @apply absolute bottom-full right-full font-elite text-p3 opacity-8 text-[0.5em];
+  }
+
+  .bottom-div::after {
+    content: '<div/>';
+    @apply absolute top-full right-full font-elite text-p3 opacity-8 text-[0.8em];
+  }
 
 
   .h1 {
@@ -182,7 +229,21 @@
   /* END of Gradients */
   /* START of Common */
   .container {
-    @apply mx-auto max-w-[1252px] px-16 max-xl:px-10 max-lg:px-6 max-sm:px-4;
+    @apply mx-auto max-w-[1440px] px-16 max-xl:px-10 max-lg:px-6 max-sm:px-4;
+  }
+
+  .echo {
+    position: relative;
+  }
+
+  .echo::before {
+    content: "";
+    @apply top-0 left-1/2 absolute bg-s2 w-8/10 h-full -translate-x-1/2 -translate-y-10 -z-2 rounded-3xl opacity-80 ;
+  }
+
+  .echo::after {
+    content: "";
+    @apply top-0 left-1/2 absolute bg-s2 w-9/10 h-full -translate-x-1/2 -translate-y-5 -z-1 rounded-3xl;
   }
 
   /* .caption { */

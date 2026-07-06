@@ -1,8 +1,9 @@
 import * as THREE from 'three'
-import { useRef, useState, useEffect } from 'react'
-import { useGLTF } from '@react-three/drei'
+import { useRef, useState, useEffect, type JSX } from 'react'
+import { useGLTF, useKeyboardControls } from '@react-three/drei'
 import type { GLTF } from 'three-stdlib'
 import { useFrame } from '@react-three/fiber'
+import { RigidBody } from '@react-three/rapier'
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -179,15 +180,25 @@ type GLTFResult = GLTF & {
   }
 }
 
+export enum Movement {
+  top = 'top',
+  bottom = 'bottom',
+  right = 'right',
+  left = 'left',
+  front = 'front',
+  back = 'back',
+}
+
 export function Rubik(props: JSX.IntrinsicElements['group']) {
-  const { nodes, materials } = useGLTF('/models/rubik.glb') as GLTFResult
-  const rootRef = useRef<THREE.Group>(null!)
-  const pivotRef = useRef<THREE.Group>(null!)
+  const { nodes, materials } = useGLTF('/models/rubik.glb') as GLTFResult;
+  const rootRef = useRef<THREE.Group>(null!);
+  const pivotRef = useRef<THREE.Group>(null!);
+  const movementQueue = useRef<{ move: string, orientation: string }[]>([]);
+  const moving = useRef<boolean>(false)
 
-  const rotateSide = (axis: 'x' | 'y' | 'z', coordinate: number) => {
-    pivotRef.current.rotation.set(0, 0, 0)
-    pivotRef.current.updateMatrixWorld()
+  const [subcribeKeys, getKeys] = useKeyboardControls();
 
+  const applyTorque = (axis: 'x' | 'y' | 'z', coordinate: number, torqueStrength: number, orientation: number) => {
     const groupsToMove: THREE.Object3D[] = []
     rootRef.current.children.forEach((child) => {
       if (child.type === 'Group' && Math.round(child.position[axis]) === coordinate) {
@@ -196,26 +207,80 @@ export function Rubik(props: JSX.IntrinsicElements['group']) {
     })
 
     groupsToMove.forEach((obj) => pivotRef.current.attach(obj))
+    const targetRotation = Math.PI / 4 * orientation;
 
-    pivotRef.current.rotation[axis] += Math.PI / 2
-    pivotRef.current.updateMatrixWorld()
+    pivotRef.current.rotation[axis] += torqueStrength * orientation;
+    pivotRef.current.updateMatrixWorld();
+    if (Math.abs(pivotRef.current.rotation[axis]) > Math.abs(targetRotation)) {
+      pivotRef.current.rotation[axis] = targetRotation;
+      pivotRef.current.updateMatrixWorld();
+      groupsToMove.forEach((obj) => rootRef.current.attach(obj));
+      movementQueue.current.splice(0, 1);
 
+      moving.current = false;
+    }
     groupsToMove.forEach((obj) => rootRef.current.attach(obj))
+    pivotRef.current.updateMatrixWorld();
+  }
+
+  useFrame((state, delta) => {
+
+    const torqueStrength = 18 * delta
+    console.log(state.camera)
+
+    if (movementQueue.current.length > 0) {
+      const currentMovement = movementQueue.current[0];
+
+      if (!moving.current) {
+        pivotRef.current.rotation.set(0, 0, 0)
+        pivotRef.current.updateMatrixWorld()
+        moving.current = true;
+      }
+
+      switch (currentMovement.move) {
+        case Movement.top:
+          applyTorque('y', 2, torqueStrength, currentMovement.orientation);
+          break;
+        case Movement.bottom:
+          applyTorque('y', -2, torqueStrength, currentMovement.orientation);
+          break;
+        case Movement.right:
+          applyTorque('x', 2, torqueStrength, currentMovement.orientation);
+          break;
+        case Movement.left:
+          applyTorque('x', -2, torqueStrength, currentMovement.orientation);
+          break;
+        case Movement.front:
+          applyTorque('z', 2, torqueStrength, currentMovement.orientation);
+          break;
+        case Movement.back:
+          applyTorque('z', -2, torqueStrength, currentMovement.orientation);
+          break;
+      }
+    }
+  })
+
+
+  const addMovement = (move: string) => {
+    const { counter } = getKeys();
+    movementQueue.current.push({ move, orientation: counter ? -1 : 1 });
   }
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'w') rotateSide('y', 2)  // Up face
-      if (e.key === 's') rotateSide('y', -2) // Down face
-      if (e.key === 'd') rotateSide('x', 2)  // Right face
-      if (e.key === 'a') rotateSide('x', -2) // Left face
-    }
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
+    const keys = getKeys();
+    Object.keys(keys).forEach((move: string) => {
+      if (move === 'counter') return;
+
+      subcribeKeys(
+        (state) => state[move],
+        (state) => {
+          if (state) addMovement(Movement[move as keyof typeof Movement]);
+        },
+      )
+    })
+
   }, [])
 
-  useFrame((state, alpha) => {
-  })
 
   return (
     <group {...props} dispose={null}>
