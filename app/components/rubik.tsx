@@ -1,9 +1,8 @@
 import * as THREE from 'three'
-import { useRef, useState, useEffect, type JSX } from 'react'
+import { useRef, useEffect, type JSX } from 'react'
 import { useGLTF, useKeyboardControls } from '@react-three/drei'
 import type { GLTF } from 'three-stdlib'
 import { useFrame } from '@react-three/fiber'
-import { RigidBody } from '@react-three/rapier'
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -189,11 +188,47 @@ export enum Movement {
   back = 'back',
 }
 
+
+type RubikMove = { coordinates: number, orientation: number, axis: 'x' | 'y' | 'z' };
+
+const rubikMovesMap: Record<Movement, RubikMove> = {
+  [Movement.top]: {
+    orientation: -1,
+    coordinates: 2,
+    axis: 'y',
+  },
+  [Movement.bottom]: {
+    coordinates: -2,
+    orientation: 1,
+    axis: 'y',
+  },
+  [Movement.right]: {
+    coordinates: 2,
+    orientation: -1,
+    axis: 'x',
+  },
+  [Movement.left]: {
+    coordinates: -2,
+    orientation: 1,
+    axis: 'x',
+  },
+  [Movement.front]: {
+    coordinates: 2,
+    orientation: -1,
+    axis: 'z',
+  },
+  [Movement.back]: {
+    coordinates: -2,
+    orientation: 1,
+    axis: 'z',
+  }
+}
+
 export function Rubik(props: JSX.IntrinsicElements['group']) {
   const { nodes, materials } = useGLTF('/models/rubik.glb') as GLTFResult;
   const rootRef = useRef<THREE.Group>(null!);
   const pivotRef = useRef<THREE.Group>(null!);
-  const movementQueue = useRef<{ move: string, orientation: string }[]>([]);
+  const movementQueue = useRef<{ move: string, orientation: number }[]>([]);
   const moving = useRef<boolean>(false)
 
   const [subcribeKeys, getKeys] = useKeyboardControls();
@@ -207,7 +242,7 @@ export function Rubik(props: JSX.IntrinsicElements['group']) {
     })
 
     groupsToMove.forEach((obj) => pivotRef.current.attach(obj))
-    const targetRotation = Math.PI / 4 * orientation;
+    const targetRotation = Math.PI / 2 * orientation;
 
     pivotRef.current.rotation[axis] += torqueStrength * orientation;
     pivotRef.current.updateMatrixWorld();
@@ -223,40 +258,21 @@ export function Rubik(props: JSX.IntrinsicElements['group']) {
     pivotRef.current.updateMatrixWorld();
   }
 
-  useFrame((state, delta) => {
+  useFrame((_state, delta) => {
 
-    const torqueStrength = 18 * delta
-    console.log(state.camera)
+    const torqueStrength = 18 * delta;
 
     if (movementQueue.current.length > 0) {
-      const currentMovement = movementQueue.current[0];
+      const currentMovementQueued = movementQueue.current[0];
+      let { axis, coordinates, orientation }: RubikMove = rubikMovesMap[currentMovementQueued.move];
+      orientation *= currentMovementQueued.orientation;
 
       if (!moving.current) {
         pivotRef.current.rotation.set(0, 0, 0)
         pivotRef.current.updateMatrixWorld()
         moving.current = true;
       }
-
-      switch (currentMovement.move) {
-        case Movement.top:
-          applyTorque('y', 2, torqueStrength, currentMovement.orientation);
-          break;
-        case Movement.bottom:
-          applyTorque('y', -2, torqueStrength, currentMovement.orientation);
-          break;
-        case Movement.right:
-          applyTorque('x', 2, torqueStrength, currentMovement.orientation);
-          break;
-        case Movement.left:
-          applyTorque('x', -2, torqueStrength, currentMovement.orientation);
-          break;
-        case Movement.front:
-          applyTorque('z', 2, torqueStrength, currentMovement.orientation);
-          break;
-        case Movement.back:
-          applyTorque('z', -2, torqueStrength, currentMovement.orientation);
-          break;
-      }
+      applyTorque(axis, coordinates, torqueStrength, orientation);
     }
   })
 
@@ -289,218 +305,212 @@ export function Rubik(props: JSX.IntrinsicElements['group']) {
       <group ref={rootRef}>
         <group name="rbw" position={[-2, 2, 2]}>
           <mesh name="rbw_1" geometry={nodes.rbw_1.geometry} material={materials.base} />
-          <mesh name="rbw_2" geometry={nodes.rbw_2.geometry} material={materials.yellow} />
+          <mesh name="rbw_2" geometry={nodes.rbw_2.geometry} material={materials.base} />
           <mesh name="rbw_3" geometry={nodes.rbw_3.geometry} material={materials.red} />
           <mesh name="rbw_4" geometry={nodes.rbw_4.geometry} material={materials.blue} />
-          <mesh name="rbw_5" geometry={nodes.rbw_5.geometry} material={materials.orange} />
-          <mesh name="rbw_6" geometry={nodes.rbw_6.geometry} material={materials.green} />
+          <mesh name="rbw_5" geometry={nodes.rbw_5.geometry} material={materials.base} />
+          <mesh name="rbw_6" geometry={nodes.rbw_6.geometry} material={materials.base} />
         </group>
         <group name="rw" position={[0, 2, 2]}>
           <mesh name="rw_1" geometry={nodes.rw_1.geometry} material={materials.base} />
-          <mesh name="rw_2" geometry={nodes.rw_2.geometry} material={materials.yellow} />
+          <mesh name="rw_2" geometry={nodes.rw_2.geometry} material={materials.base} />
           <mesh name="rw_3" geometry={nodes.rw_3.geometry} material={materials.red} />
-          <mesh name="rw_4" geometry={nodes.rw_4.geometry} material={materials.blue} />
-          <mesh name="rw_5" geometry={nodes.rw_5.geometry} material={materials.orange} />
-          <mesh name="rw_6" geometry={nodes.rw_6.geometry} material={materials.green} />
+          <mesh name="rw_4" geometry={nodes.rw_4.geometry} material={materials.base} />
+          <mesh name="rw_5" geometry={nodes.rw_5.geometry} material={materials.base} />
+          <mesh name="rw_6" geometry={nodes.rw_6.geometry} material={materials.base} />
         </group>
-        <group name="rwg" position={[2.007, 1.995, 1.985]}>
+        <group name="rwg" position={[2, 2, 2]}>
           <mesh name="rwg_1" geometry={nodes.rwg_1.geometry} material={materials.base} />
-          <mesh name="rwg_2" geometry={nodes.rwg_2.geometry} material={materials.yellow} />
+          <mesh name="rwg_2" geometry={nodes.rwg_2.geometry} material={materials.base} />
           <mesh name="rwg_3" geometry={nodes.rwg_3.geometry} material={materials.red} />
-          <mesh name="rwg_4" geometry={nodes.rwg_4.geometry} material={materials.blue} />
-          <mesh name="rwg_5" geometry={nodes.rwg_5.geometry} material={materials.orange} />
+          <mesh name="rwg_4" geometry={nodes.rwg_4.geometry} material={materials.base} />
+          <mesh name="rwg_5" geometry={nodes.rwg_5.geometry} material={materials.base} />
           <mesh name="rwg_6" geometry={nodes.rwg_6.geometry} material={materials.green} />
         </group>
         <group name="rg" position={[2, 2, 0]}>
           <mesh name="rg_1" geometry={nodes.rg_1.geometry} material={materials.base} />
-          <mesh name="rg_2" geometry={nodes.rg_2.geometry} material={materials.yellow} />
+          <mesh name="rg_2" geometry={nodes.rg_2.geometry} material={materials.base} />
           <mesh name="rg_3" geometry={nodes.rg_3.geometry} material={materials.red} />
-          <mesh name="rg_4" geometry={nodes.rg_4.geometry} material={materials.blue} />
-          <mesh name="rg_5" geometry={nodes.rg_5.geometry} material={materials.orange} />
+          <mesh name="rg_4" geometry={nodes.rg_4.geometry} material={materials.base} />
+          <mesh name="rg_5" geometry={nodes.rg_5.geometry} material={materials.base} />
           <mesh name="rg_6" geometry={nodes.rg_6.geometry} material={materials.green} />
         </group>
         <group name="r" position={[0, 2, 0]}>
           <mesh name="r_1" geometry={nodes.r_1.geometry} material={materials.base} />
-          <mesh name="r_2" geometry={nodes.r_2.geometry} material={materials.yellow} />
+          <mesh name="r_2" geometry={nodes.r_2.geometry} material={materials.base} />
           <mesh name="r_3" geometry={nodes.r_3.geometry} material={materials.red} />
-          <mesh name="r_4" geometry={nodes.r_4.geometry} material={materials.blue} />
-          <mesh name="r_5" geometry={nodes.r_5.geometry} material={materials.orange} />
-          <mesh name="r_6" geometry={nodes.r_6.geometry} material={materials.green} />
+          <mesh name="r_4" geometry={nodes.r_4.geometry} material={materials.base} />
+          <mesh name="r_5" geometry={nodes.r_5.geometry} material={materials.base} />
+          <mesh name="r_6" geometry={nodes.r_6.geometry} material={materials.base} />
         </group>
         <group name="rb" position={[-2, 2, 0]}>
           <mesh name="rb_1" geometry={nodes.rb_1.geometry} material={materials.base} />
-          <mesh name="rb_2" geometry={nodes.rb_2.geometry} material={materials.yellow} />
+          <mesh name="rb_2" geometry={nodes.rb_2.geometry} material={materials.base} />
           <mesh name="rb_3" geometry={nodes.rb_3.geometry} material={materials.red} />
           <mesh name="rb_4" geometry={nodes.rb_4.geometry} material={materials.blue} />
-          <mesh name="rb_5" geometry={nodes.rb_5.geometry} material={materials.orange} />
-          <mesh name="rb_6" geometry={nodes.rb_6.geometry} material={materials.green} />
+          <mesh name="rb_5" geometry={nodes.rb_5.geometry} material={materials.base} />
+          <mesh name="rb_6" geometry={nodes.rb_6.geometry} material={materials.base} />
         </group>
         <group name="ryb" position={[-2, 2, -2]}>
           <mesh name="ryb_1" geometry={nodes.ryb_1.geometry} material={materials.base} />
           <mesh name="ryb_2" geometry={nodes.ryb_2.geometry} material={materials.yellow} />
           <mesh name="ryb_3" geometry={nodes.ryb_3.geometry} material={materials.red} />
           <mesh name="ryb_4" geometry={nodes.ryb_4.geometry} material={materials.blue} />
-          <mesh name="ryb_5" geometry={nodes.ryb_5.geometry} material={materials.orange} />
-          <mesh name="ryb_6" geometry={nodes.ryb_6.geometry} material={materials.green} />
+          <mesh name="ryb_5" geometry={nodes.ryb_5.geometry} material={materials.base} />
+          <mesh name="ryb_6" geometry={nodes.ryb_6.geometry} material={materials.base} />
         </group>
         <group name="ry" position={[0, 2, -2]}>
           <mesh name="ry_1" geometry={nodes.ry_1.geometry} material={materials.base} />
           <mesh name="ry_2" geometry={nodes.ry_2.geometry} material={materials.yellow} />
           <mesh name="ry_3" geometry={nodes.ry_3.geometry} material={materials.red} />
-          <mesh name="ry_4" geometry={nodes.ry_4.geometry} material={materials.blue} />
-          <mesh name="ry_5" geometry={nodes.ry_5.geometry} material={materials.orange} />
-          <mesh name="ry_6" geometry={nodes.ry_6.geometry} material={materials.green} />
+          <mesh name="ry_4" geometry={nodes.ry_4.geometry} material={materials.base} />
+          <mesh name="ry_5" geometry={nodes.ry_5.geometry} material={materials.base} />
+          <mesh name="ry_6" geometry={nodes.ry_6.geometry} material={materials.base} />
         </group>
         <group name="ryg" position={[2, 2, -2]}>
           <mesh name="ryg_1" geometry={nodes.ryg_1.geometry} material={materials.base} />
           <mesh name="ryg_2" geometry={nodes.ryg_2.geometry} material={materials.yellow} />
           <mesh name="ryg_3" geometry={nodes.ryg_3.geometry} material={materials.red} />
-          <mesh name="ryg_4" geometry={nodes.ryg_4.geometry} material={materials.blue} />
-          <mesh name="ryg_5" geometry={nodes.ryg_5.geometry} material={materials.orange} />
+          <mesh name="ryg_4" geometry={nodes.ryg_4.geometry} material={materials.base} />
+          <mesh name="ryg_5" geometry={nodes.ryg_5.geometry} material={materials.base} />
           <mesh name="ryg_6" geometry={nodes.ryg_6.geometry} material={materials.green} />
         </group>
         <group name="w" position={[0, 0, 2]}>
           <mesh name="w_1" geometry={nodes.w_1.geometry} material={materials.base} />
-          <mesh name="w_2" geometry={nodes.w_2.geometry} material={materials.yellow} />
-          <mesh name="w_3" geometry={nodes.w_3.geometry} material={materials.red} />
-          <mesh name="w_4" geometry={nodes.w_4.geometry} material={materials.blue} />
-          <mesh name="w_5" geometry={nodes.w_5.geometry} material={materials.orange} />
-          <mesh name="w_6" geometry={nodes.w_6.geometry} material={materials.green} />
+          <mesh name="w_2" geometry={nodes.w_2.geometry} material={materials.base} />
+          <mesh name="w_3" geometry={nodes.w_3.geometry} material={materials.base} />
+          <mesh name="w_4" geometry={nodes.w_4.geometry} material={materials.base} />
+          <mesh name="w_5" geometry={nodes.w_5.geometry} material={materials.base} />
+          <mesh name="w_6" geometry={nodes.w_6.geometry} material={materials.base} />
         </group>
         <group name="wg" position={[2, 0, 2]}>
           <mesh name="wg_1" geometry={nodes.wg_1.geometry} material={materials.base} />
-          <mesh name="wg_2" geometry={nodes.wg_2.geometry} material={materials.yellow} />
-          <mesh name="wg_3" geometry={nodes.wg_3.geometry} material={materials.red} />
-          <mesh name="wg_4" geometry={nodes.wg_4.geometry} material={materials.blue} />
-          <mesh name="wg_5" geometry={nodes.wg_5.geometry} material={materials.orange} />
+          <mesh name="wg_2" geometry={nodes.wg_2.geometry} material={materials.base} />
+          <mesh name="wg_3" geometry={nodes.wg_3.geometry} material={materials.base} />
+          <mesh name="wg_4" geometry={nodes.wg_4.geometry} material={materials.base} />
+          <mesh name="wg_5" geometry={nodes.wg_5.geometry} material={materials.base} />
           <mesh name="wg_6" geometry={nodes.wg_6.geometry} material={materials.green} />
         </group>
         <group name="wb" position={[-2, 0, 2]}>
           <mesh name="wb_1" geometry={nodes.wb_1.geometry} material={materials.base} />
-          <mesh name="wb_2" geometry={nodes.wb_2.geometry} material={materials.yellow} />
-          <mesh name="wb_3" geometry={nodes.wb_3.geometry} material={materials.red} />
+          <mesh name="wb_2" geometry={nodes.wb_2.geometry} material={materials.base} />
+          <mesh name="wb_3" geometry={nodes.wb_3.geometry} material={materials.base} />
           <mesh name="wb_4" geometry={nodes.wb_4.geometry} material={materials.blue} />
-          <mesh name="wb_5" geometry={nodes.wb_5.geometry} material={materials.orange} />
-          <mesh name="wb_6" geometry={nodes.wb_6.geometry} material={materials.green} />
+          <mesh name="wb_5" geometry={nodes.wb_5.geometry} material={materials.base} />
+          <mesh name="wb_6" geometry={nodes.wb_6.geometry} material={materials.base} />
         </group>
         <group name="wbo" position={[-2, -2, 2]}>
           <mesh name="wbo_1" geometry={nodes.wbo_1.geometry} material={materials.base} />
-          <mesh name="wbo_2" geometry={nodes.wbo_2.geometry} material={materials.yellow} />
-          <mesh name="wbo_3" geometry={nodes.wbo_3.geometry} material={materials.red} />
+          <mesh name="wbo_2" geometry={nodes.wbo_2.geometry} material={materials.base} />
+          <mesh name="wbo_3" geometry={nodes.wbo_3.geometry} material={materials.base} />
           <mesh name="wbo_4" geometry={nodes.wbo_4.geometry} material={materials.blue} />
           <mesh name="wbo_5" geometry={nodes.wbo_5.geometry} material={materials.orange} />
-          <mesh name="wbo_6" geometry={nodes.wbo_6.geometry} material={materials.green} />
+          <mesh name="wbo_6" geometry={nodes.wbo_6.geometry} material={materials.base} />
         </group>
         <group name="wo" position={[0, -2, 2]}>
           <mesh name="wo_1" geometry={nodes.wo_1.geometry} material={materials.base} />
-          <mesh name="wo_2" geometry={nodes.wo_2.geometry} material={materials.yellow} />
-          <mesh name="wo_3" geometry={nodes.wo_3.geometry} material={materials.red} />
-          <mesh name="wo_4" geometry={nodes.wo_4.geometry} material={materials.blue} />
+          <mesh name="wo_2" geometry={nodes.wo_2.geometry} material={materials.base} />
+          <mesh name="wo_3" geometry={nodes.wo_3.geometry} material={materials.base} />
+          <mesh name="wo_4" geometry={nodes.wo_4.geometry} material={materials.base} />
           <mesh name="wo_5" geometry={nodes.wo_5.geometry} material={materials.orange} />
-          <mesh name="wo_6" geometry={nodes.wo_6.geometry} material={materials.green} />
+          <mesh name="wo_6" geometry={nodes.wo_6.geometry} material={materials.base} />
         </group>
         <group name="wgo" position={[2, -2, 2]}>
           <mesh name="wgo_1" geometry={nodes.wgo_1.geometry} material={materials.base} />
-          <mesh name="wgo_2" geometry={nodes.wgo_2.geometry} material={materials.yellow} />
-          <mesh name="wgo_3" geometry={nodes.wgo_3.geometry} material={materials.red} />
-          <mesh name="wgo_4" geometry={nodes.wgo_4.geometry} material={materials.blue} />
+          <mesh name="wgo_2" geometry={nodes.wgo_2.geometry} material={materials.base} />
+          <mesh name="wgo_3" geometry={nodes.wgo_3.geometry} material={materials.base} />
+          <mesh name="wgo_4" geometry={nodes.wgo_4.geometry} material={materials.base} />
           <mesh name="wgo_5" geometry={nodes.wgo_5.geometry} material={materials.orange} />
           <mesh name="wgo_6" geometry={nodes.wgo_6.geometry} material={materials.green} />
         </group>
         <group name="g" position={[2, 0, 0]}>
           <mesh name="g_1" geometry={nodes.g_1.geometry} material={materials.base} />
-          <mesh name="g_2" geometry={nodes.g_2.geometry} material={materials.yellow} />
-          <mesh name="g_3" geometry={nodes.g_3.geometry} material={materials.red} />
-          <mesh name="g_4" geometry={nodes.g_4.geometry} material={materials.blue} />
-          <mesh name="g_5" geometry={nodes.g_5.geometry} material={materials.orange} />
+          <mesh name="g_2" geometry={nodes.g_2.geometry} material={materials.base} />
+          <mesh name="g_3" geometry={nodes.g_3.geometry} material={materials.base} />
+          <mesh name="g_4" geometry={nodes.g_4.geometry} material={materials.base} />
+          <mesh name="g_5" geometry={nodes.g_5.geometry} material={materials.base} />
           <mesh name="g_6" geometry={nodes.g_6.geometry} material={materials.green} />
         </group>
         <group name="gy" position={[2, 0, -2]}>
           <mesh name="gy_1" geometry={nodes.gy_1.geometry} material={materials.base} />
           <mesh name="gy_2" geometry={nodes.gy_2.geometry} material={materials.yellow} />
-          <mesh name="gy_3" geometry={nodes.gy_3.geometry} material={materials.red} />
-          <mesh name="gy_4" geometry={nodes.gy_4.geometry} material={materials.blue} />
-          <mesh name="gy_5" geometry={nodes.gy_5.geometry} material={materials.orange} />
+          <mesh name="gy_3" geometry={nodes.gy_3.geometry} material={materials.base} />
+          <mesh name="gy_4" geometry={nodes.gy_4.geometry} material={materials.base} />
+          <mesh name="gy_5" geometry={nodes.gy_5.geometry} material={materials.base} />
           <mesh name="gy_6" geometry={nodes.gy_6.geometry} material={materials.green} />
         </group>
         <group name="go" position={[2, -2, 0]}>
           <mesh name="go_1" geometry={nodes.go_1.geometry} material={materials.base} />
-          <mesh name="go_2" geometry={nodes.go_2.geometry} material={materials.yellow} />
-          <mesh name="go_3" geometry={nodes.go_3.geometry} material={materials.red} />
-          <mesh name="go_4" geometry={nodes.go_4.geometry} material={materials.blue} />
+          <mesh name="go_2" geometry={nodes.go_2.geometry} material={materials.base} />
+          <mesh name="go_3" geometry={nodes.go_3.geometry} material={materials.base} />
+          <mesh name="go_4" geometry={nodes.go_4.geometry} material={materials.base} />
           <mesh name="go_5" geometry={nodes.go_5.geometry} material={materials.orange} />
           <mesh name="go_6" geometry={nodes.go_6.geometry} material={materials.green} />
         </group>
         <group name="goy" position={[2, -2, -2]}>
           <mesh name="goy_1" geometry={nodes.goy_1.geometry} material={materials.base} />
           <mesh name="goy_2" geometry={nodes.goy_2.geometry} material={materials.yellow} />
-          <mesh name="goy_3" geometry={nodes.goy_3.geometry} material={materials.red} />
-          <mesh name="goy_4" geometry={nodes.goy_4.geometry} material={materials.blue} />
+          <mesh name="goy_3" geometry={nodes.goy_3.geometry} material={materials.base} />
+          <mesh name="goy_4" geometry={nodes.goy_4.geometry} material={materials.base} />
           <mesh name="goy_5" geometry={nodes.goy_5.geometry} material={materials.orange} />
           <mesh name="goy_6" geometry={nodes.goy_6.geometry} material={materials.green} />
         </group>
         <group name="y" position={[0, 0, -2]}>
           <mesh name="y_1" geometry={nodes.y_1.geometry} material={materials.base} />
           <mesh name="y_2" geometry={nodes.y_2.geometry} material={materials.yellow} />
-          <mesh name="y_3" geometry={nodes.y_3.geometry} material={materials.red} />
-          <mesh name="y_4" geometry={nodes.y_4.geometry} material={materials.blue} />
-          <mesh name="y_5" geometry={nodes.y_5.geometry} material={materials.orange} />
-          <mesh name="y_6" geometry={nodes.y_6.geometry} material={materials.green} />
+          <mesh name="y_3" geometry={nodes.y_3.geometry} material={materials.base} />
+          <mesh name="y_4" geometry={nodes.y_4.geometry} material={materials.base} />
+          <mesh name="y_5" geometry={nodes.y_5.geometry} material={materials.base} />
+          <mesh name="y_6" geometry={nodes.y_6.geometry} material={materials.base} />
         </group>
         <group name="yb" position={[-2, 0, -2]}>
           <mesh name="yb_1" geometry={nodes.yb_1.geometry} material={materials.base} />
           <mesh name="yb_2" geometry={nodes.yb_2.geometry} material={materials.yellow} />
-          <mesh name="yb_3" geometry={nodes.yb_3.geometry} material={materials.red} />
+          <mesh name="yb_3" geometry={nodes.yb_3.geometry} material={materials.base} />
           <mesh name="yb_4" geometry={nodes.yb_4.geometry} material={materials.blue} />
-          <mesh name="yb_5" geometry={nodes.yb_5.geometry} material={materials.orange} />
-          <mesh name="yb_6" geometry={nodes.yb_6.geometry} material={materials.green} />
+          <mesh name="yb_5" geometry={nodes.yb_5.geometry} material={materials.base} />
+          <mesh name="yb_6" geometry={nodes.yb_6.geometry} material={materials.base} />
         </group>
         <group name="b" position={[-2, 0, 0]}>
           <mesh name="b_1" geometry={nodes.b_1.geometry} material={materials.base} />
-          <mesh name="b_2" geometry={nodes.b_2.geometry} material={materials.yellow} />
-          <mesh name="b_3" geometry={nodes.b_3.geometry} material={materials.red} />
+          <mesh name="b_2" geometry={nodes.b_2.geometry} material={materials.base} />
+          <mesh name="b_3" geometry={nodes.b_3.geometry} material={materials.base} />
           <mesh name="b_4" geometry={nodes.b_4.geometry} material={materials.blue} />
-          <mesh name="b_5" geometry={nodes.b_5.geometry} material={materials.orange} />
-          <mesh name="b_6" geometry={nodes.b_6.geometry} material={materials.green} />
+          <mesh name="b_5" geometry={nodes.b_5.geometry} material={materials.base} />
+          <mesh name="b_6" geometry={nodes.b_6.geometry} material={materials.base} />
         </group>
         <group name="yo" position={[0, -2, -2]}>
           <mesh name="yo_1" geometry={nodes.yo_1.geometry} material={materials.base} />
           <mesh name="yo_2" geometry={nodes.yo_2.geometry} material={materials.yellow} />
-          <mesh name="yo_3" geometry={nodes.yo_3.geometry} material={materials.red} />
-          <mesh name="yo_4" geometry={nodes.yo_4.geometry} material={materials.blue} />
+          <mesh name="yo_3" geometry={nodes.yo_3.geometry} material={materials.base} />
+          <mesh name="yo_4" geometry={nodes.yo_4.geometry} material={materials.base} />
           <mesh name="yo_5" geometry={nodes.yo_5.geometry} material={materials.orange} />
-          <mesh name="yo_6" geometry={nodes.yo_6.geometry} material={materials.green} />
+          <mesh name="yo_6" geometry={nodes.yo_6.geometry} material={materials.base} />
         </group>
         <group name="yob" position={[-2, -2, -2]}>
           <mesh name="yob_1" geometry={nodes.yob_1.geometry} material={materials.base} />
           <mesh name="yob_2" geometry={nodes.yob_2.geometry} material={materials.yellow} />
-          <mesh name="yob_3" geometry={nodes.yob_3.geometry} material={materials.red} />
+          <mesh name="yob_3" geometry={nodes.yob_3.geometry} material={materials.base} />
           <mesh name="yob_4" geometry={nodes.yob_4.geometry} material={materials.blue} />
           <mesh name="yob_5" geometry={nodes.yob_5.geometry} material={materials.orange} />
-          <mesh name="yob_6" geometry={nodes.yob_6.geometry} material={materials.green} />
+          <mesh name="yob_6" geometry={nodes.yob_6.geometry} material={materials.base} />
         </group>
         <group name="bo" position={[-2, -2, 0]}>
           <mesh name="bo_1" geometry={nodes.bo_1.geometry} material={materials.base} />
-          <mesh name="bo_2" geometry={nodes.bo_2.geometry} material={materials.yellow} />
-          <mesh name="bo_3" geometry={nodes.bo_3.geometry} material={materials.red} />
+          <mesh name="bo_2" geometry={nodes.bo_2.geometry} material={materials.base} />
+          <mesh name="bo_3" geometry={nodes.bo_3.geometry} material={materials.base} />
           <mesh name="bo_4" geometry={nodes.bo_4.geometry} material={materials.blue} />
           <mesh name="bo_5" geometry={nodes.bo_5.geometry} material={materials.orange} />
-          <mesh name="bo_6" geometry={nodes.bo_6.geometry} material={materials.green} />
+          <mesh name="bo_6" geometry={nodes.bo_6.geometry} material={materials.base} />
         </group>
         <group name="o" position={[0, -2, 0]}>
           <mesh name="o_1" geometry={nodes.o_1.geometry} material={materials.base} />
-          <mesh name="o_2" geometry={nodes.o_2.geometry} material={materials.yellow} />
-          <mesh name="o_3" geometry={nodes.o_3.geometry} material={materials.red} />
-          <mesh name="o_4" geometry={nodes.o_4.geometry} material={materials.blue} />
+          <mesh name="o_2" geometry={nodes.o_2.geometry} material={materials.base} />
+          <mesh name="o_3" geometry={nodes.o_3.geometry} material={materials.base} />
+          <mesh name="o_4" geometry={nodes.o_4.geometry} material={materials.base} />
           <mesh name="o_5" geometry={nodes.o_5.geometry} material={materials.orange} />
-          <mesh name="o_6" geometry={nodes.o_6.geometry} material={materials.green} />
+          <mesh name="o_6" geometry={nodes.o_6.geometry} material={materials.base} />
         </group>
-        <mesh name="cube_1" geometry={nodes.cube_1.geometry} material={materials.base} />
-        <mesh name="cube_2" geometry={nodes.cube_2.geometry} material={materials.yellow} />
-        <mesh name="cube_3" geometry={nodes.cube_3.geometry} material={materials.red} />
-        <mesh name="cube_4" geometry={nodes.cube_4.geometry} material={materials.blue} />
-        <mesh name="cube_5" geometry={nodes.cube_5.geometry} material={materials.orange} />
-        <mesh name="cube_6" geometry={nodes.cube_6.geometry} material={materials.green} />
       </group>
     </group>
   )

@@ -87,6 +87,10 @@
 }
 
 @layer utilities {
+  .button-p {
+    @apply rounded-3xl border px-8 py-4 text-2xl font-semibold cursor-pointer;
+  }
+
   .h-num {
     @apply font-inter text-[72px] font-bold leading-[84px];
   }

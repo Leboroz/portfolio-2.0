@@ -1,24 +1,34 @@
-import { Environment, KeyboardControls, OrbitControls } from "@react-three/drei"
+import { KeyboardControls, OrbitControls, type KeyboardControlsEntry } from "@react-three/drei"
 import { Canvas } from "@react-three/fiber"
-import { Physics } from "@react-three/rapier"
+import { useState, useMemo } from "react"
 import { Rubik } from "~/components/rubik"
+import { RubikPanel } from "~/components/RubikPanel"
 
+export type RubikControls = "top" | "bottom" | "left" | "right" | "back" | "front" | "counter";
 
 export const About = (props: {}) => {
+  const [showDisplay, setShowDisplay] = useState<boolean>(false);
+  const keyboardControlsMap = useMemo<KeyboardControlsEntry<RubikControls>[]>(() => [
+    { name: 'top', keys: ['KeyW'] },
+    { name: 'bottom', keys: ['KeyS'] },
+    { name: 'right', keys: ['KeyD'] },
+    { name: 'left', keys: ['KeyA'] },
+    { name: 'front', keys: ['KeyQ'] },
+    { name: 'back', keys: ['KeyE'] },
+    { name: 'counter', keys: ['ShiftLeft'] },
+  ], []);
+  const toggleKeyboardPanel = () => setShowDisplay(prev => !prev)
+
   return (
-    <section id="about" className="section container bg-p2 pt-20 pb-50 text-p3">
-      <div className="w-1/2 h-full cursor-grab">
-        <KeyboardControls map={[
-          { name: 'top', keys: ['KeyW'] },
-          { name: 'bottom', keys: ['KeyS'] },
-          { name: 'right', keys: ['KeyD'] },
-          { name: 'left', keys: ['KeyA'] },
-          { name: 'front', keys: ['KeyQ'] },
-          { name: 'back', keys: ['KeyE'] },
-          { name: 'counter', keys: ['ShiftLeft'] },
-        ]}
+    <section id="about" className="section container flex bg-p2 pt-20 pb-50 text-p3">
+      <div
+        onMouseEnter={toggleKeyboardPanel}
+        onMouseLeave={toggleKeyboardPanel}
+        className="flex-1 w-1/2 h-full cursor-grab relative"
+      >
+        <KeyboardControls map={keyboardControlsMap}
         >
-          <RubikPanel />
+          {showDisplay && <RubikPanel />}
           <Canvas
             camera={{
               fov: 75,
@@ -33,11 +43,19 @@ export const About = (props: {}) => {
             dpr={[1, 1.5]}
           >
             <OrbitControls />
-            <directionalLight position={[1, 2, 3]} intensity={4.5} />
-            <ambientLight intensity={4.5} />
+            <directionalLight position={[1, 2, 3]} color='#285A48' intensity={4.5} />
+            <ambientLight intensity={5} />
             <Rubik />
           </Canvas>
         </KeyboardControls>
+      </div>
+      <div className="flex-1 flex flex-col justify-around pt-10">
+        <h1 className="h2 text-p1">Why <span className="text-s2">Hire me</span>?</h1>
+        <p className="text-sm w-2/3">I am a performance-driven Full-stack Developer with a unique focus on 3D graphics and native web architecture. Combining rigorous backend integration experience with a passion for high-end visual engineering, I deliver lean, high-quality code and effective, creative solutions to complex technical challenges.</p>
+        <div>
+          <div></div>
+        </div>
+        <button type="button" className="button button-p w-fit ">Hire me</button>
       </div>
     </section>
   )

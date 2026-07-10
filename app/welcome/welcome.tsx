@@ -40,6 +40,7 @@ export function Welcome() {
 
     return today.getFullYear() - startDate.getFullYear();
   }, []);
+
   return (
     <>
       <section id="intro" className="container flex px-15">
