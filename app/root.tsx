@@ -9,7 +9,7 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
-import Navbar from "./components/navbar";
+import Navbar from "./components/Navbar";
 import { LINKS } from "../lib/data";
 
 export const links: Route.LinksFunction = () => [

@@ -11,14 +11,10 @@ interface NavbarProps {
 const Navbar = ({ links }: NavbarProps) => {
   const [showMenu, setShowMenu] = useState<boolean>(false);
 
-  const middleIndex = Math.floor(links.length / 2);
-  const firstHalf = links.slice(0, middleIndex);
-  const secondHalf = links.slice(middleIndex);
-
   const toggleMenu = () => setShowMenu((prev) => !prev);
 
   return (
-    <nav className="bg-black-100 lg:fixed lg:top-4 lg:left-1/2 lg:-translate-x-1/2 py-5 px-7 lg:rounded-full lg:w-[90%] lg:z-10">
+    <nav className="bg-black-100 lg:fixed lg:top-0 py-1 px-2 lg:rounded-full lg:w-full lg:z-10">
       <button
         onClick={toggleMenu}
         aria-label="Toggle navigation menu"
@@ -28,26 +24,24 @@ const Navbar = ({ links }: NavbarProps) => {
       </button>
 
       <div className={showMenu ? 'hidden' : 'block' + ' lg:flex lg:justify-between'}>
-        <ul className="flex gap-20">
-          {firstHalf.map((link) => (
-            <li key={link.text}>
-              <a href={link.href}>{link.text}</a>
-            </li>
-          ))}
-        </ul>
 
-        <img src="" alt="logo" />
+        <div className="flex g-1">
 
-        <ul className="flex gap-20">
-          {secondHalf.map((link) => (
-            <li key={link.text}>
-              <a href={link.href}>{link.text}</a>
-            </li>
-          ))}
-        </ul>
+        </div>
+
+        <LinkList links={links} />
       </div>
     </nav >
   );
 };
 
+const LinkList = ({ links }) => (
+  <ul className="flex gap-2 items-center">
+    {links.map((link) => (
+      <li key={link.text} className="h-fit">
+        <a className="px-2" href={link.href}>{link.text}</a>
+      </li>
+    ))}
+  </ul>
+)
 export default Navbar;

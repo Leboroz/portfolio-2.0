@@ -1,5 +1,4 @@
-import { PageTitle } from "~/components/pageTitle"
-import { Service } from "~/components/service"
+import { PageTitle } from "~/components/PageTitle"
 import { SERVICES } from "../../lib/data"
 import { ServiceCard } from "~/components/ServiceCard"
 
@@ -11,7 +10,7 @@ export const Services = (props: {}) => {
         <PageTitle title='My Services' />
 
         <div className="flex justify-between">
-          {SERVICES.map(service => (<ServiceCard title={service.title} image={service.image} ></ServiceCard>))}
+          {SERVICES.map(service => (<ServiceCard key={service.title} title={service.title} image={service.image} ></ServiceCard>))}
         </div>
       </div>
 

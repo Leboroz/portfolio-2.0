@@ -1,5 +1,12 @@
 import type { IProject } from '../types';
 
+export const HOME_TITLE = {
+  title: 'SENIOR FRONTEND ENGINEER',
+  heading: 'I build<br />interfaces that<br /> feel alive.',
+  subHeading: 'React specialist shaping high-performance digital products where systems thinking meets visual depth.',
+  callToAction: "Let's start a conversation",
+}
+
 export const SOCIAL_LINKS = [
   { name: 'github', url: 'https://github.com/Leboroz' },
   { name: 'linkedin', url: 'https://www.linkedin.com/in/leboroz' },

@@ -1,12 +1,12 @@
 import { KeyboardControls, OrbitControls, type KeyboardControlsEntry } from "@react-three/drei"
 import { Canvas } from "@react-three/fiber"
 import { useState, useMemo } from "react"
-import { Rubik } from "~/components/rubik"
+import { Rubik } from "~/components/Rubik"
 import { RubikPanel } from "~/components/RubikPanel"
 
 export type RubikControls = "top" | "bottom" | "left" | "right" | "back" | "front" | "counter";
 
-export const About = (props: {}) => {
+export const About = () => {
   const [showDisplay, setShowDisplay] = useState<boolean>(false);
   const keyboardControlsMap = useMemo<KeyboardControlsEntry<RubikControls>[]>(() => [
     { name: 'top', keys: ['KeyW'] },
@@ -20,14 +20,13 @@ export const About = (props: {}) => {
   const toggleKeyboardPanel = () => setShowDisplay(prev => !prev)
 
   return (
-    <section id="about" className="section container flex bg-p2 pt-20 pb-50 text-p3">
+    <section id="about" className="section container flex bg-p2 content text-p3">
       <div
         onMouseEnter={toggleKeyboardPanel}
         onMouseLeave={toggleKeyboardPanel}
         className="flex-1 w-1/2 h-full cursor-grab relative"
       >
-        <KeyboardControls map={keyboardControlsMap}
-        >
+        <KeyboardControls map={keyboardControlsMap}>
           {showDisplay && <RubikPanel />}
           <Canvas
             camera={{
@@ -35,9 +34,9 @@ export const About = (props: {}) => {
               near: 0.1,
               far: 1000,
               position: [
-                -6.170832126477689,
-                4.14290430247447,
-                4.988205176763846,
+                -6.17,
+                4.14,
+                4.99,
               ],
             }}
             dpr={[1, 1.5]}
@@ -53,10 +52,15 @@ export const About = (props: {}) => {
         <h1 className="h2 text-p1">Why <span className="text-s2">Hire me</span>?</h1>
         <p className="text-sm w-2/3">I am a performance-driven Full-stack Developer with a unique focus on 3D graphics and native web architecture. Combining rigorous backend integration experience with a passion for high-end visual engineering, I deliver lean, high-quality code and effective, creative solutions to complex technical challenges.</p>
         <div>
-          <div></div>
         </div>
-        <button type="button" className="button button-p w-fit ">Hire me</button>
+        <button type="button" className="button button-p w-fit">Hire me</button>
       </div>
     </section>
   )
 }
+
+const QuatityBadge = () => (
+  <div>
+
+  </div>
+);
