@@ -36,7 +36,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <Navbar links={LINKS} />
-        <main >
+        <main>
           {children}
         </main>
         <ScrollRestoration />

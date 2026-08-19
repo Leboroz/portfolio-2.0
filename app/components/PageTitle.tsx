@@ -4,7 +4,7 @@ interface PageTitleProps {
 
 export const PageTitle = ({ title }: PageTitleProps) => {
   return (
-    <h3 className="h2 text-2xl text-terminal-green">
+    <h3 className="h3 text-terminal-green">
       {title}
     </h3>
   )

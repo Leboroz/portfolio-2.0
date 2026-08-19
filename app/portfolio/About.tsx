@@ -1,6 +1,8 @@
 import { KeyboardControls, OrbitControls, type KeyboardControlsEntry } from "@react-three/drei"
 import { Canvas } from "@react-three/fiber"
 import { useState, useMemo } from "react"
+import { PageTitle } from "~/components/PageTitle"
+import { PrimaryButton } from "~/components/PrimaryButton"
 import { Rubik } from "~/components/Rubik"
 import { RubikPanel } from "~/components/RubikPanel"
 
@@ -49,11 +51,17 @@ export const About = () => {
         </KeyboardControls>
       </div>
       <div className="flex-1 flex flex-col justify-around pt-10">
-        <h1 className="h2 text-p1">Why <span className="text-s2">Hire me</span>?</h1>
-        <p className="text-sm w-2/3">I am a performance-driven Full-stack Developer with a unique focus on 3D graphics and native web architecture. Combining rigorous backend integration experience with a passion for high-end visual engineering, I deliver lean, high-quality code and effective, creative solutions to complex technical challenges.</p>
-        <div>
-        </div>
-        <button type="button" className="button button-p w-fit">Hire me</button>
+        <header>
+          <PageTitle title='Why hire me?' />
+
+        </header>
+        <p className="text-sm w-2/3">
+          I am a performance-driven Full-stack Developer with a unique focus on 3D
+          graphics and native web architecture. Combining rigorous backend integration
+          experience with a passion for high-end visual engineering, I deliver lean,
+          high-quality code and effective, creative solutions to complex technical challenges.
+        </p>
+        <PrimaryButton text='Hire me' />
       </div>
     </section>
   )

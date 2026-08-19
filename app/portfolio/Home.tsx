@@ -2,13 +2,14 @@ import { useMemo, useState } from "react";
 import { START_DATE } from "../../lib/data";
 import { PageTitle } from "~/components/PageTitle";
 import { PrimaryButton } from "~/components/PrimaryButton";
-import { Teminal } from "~/components/Teminal";
+import { Terminal, type TerminalProps } from "~/components/Terminal";
 
 interface HomeProps {
   title: string;
   subHeading: string;
   heading: string;
   callToAction: string;
+  terminal: TerminalProps;
 }
 
 export const Home = (props: HomeProps) => {
@@ -21,14 +22,16 @@ export const Home = (props: HomeProps) => {
   }, []);
 
   return (
-    <section id="intro" className="container flex">
-      <article className="flex flex-col gap-3">
-        <PageTitle title={props.title} />
-        <h1 className="h1" dangerouslySetInnerHTML={{ __html: props.heading }} />
-        <p>{props.subHeading}</p>
-        <PrimaryButton text={props.callToAction} />
-      </article>
-      <Teminal />
+    <section id="intro" className="container flex items-center">
+      <div className="flex items-stretch h-fit">
+        <article className="flex flex-col flex-1 justify-between">
+          <PageTitle title={props.title} />
+          <h1 className="h1" dangerouslySetInnerHTML={{ __html: props.heading }} />
+          <p className="text-muted">{props.subHeading}</p>
+          <PrimaryButton text={props.callToAction} />
+        </article>
+        <Terminal {...props.terminal} className="flex-1" />
+      </div>
     </section>
   )
 }
