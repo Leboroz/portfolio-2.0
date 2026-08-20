@@ -1,11 +1,12 @@
 import { SERVICES } from "../../lib/data"
 import { ServiceCard } from "~/components/ServiceCard"
 import { Tag } from "~/components/Tag"
-import { SectionLayout } from "../layouts/SectionLayout"
+import { SectionLayout } from "~/layouts/SectionLayout"
+
 
 export const Services = () => {
   return (
-    <SectionLayout>
+    <SectionLayout title='My Services' subHeading='From the first wireframe to the final frame.'>
       <div className="flex justify-between gap-3">
         {
           SERVICES
