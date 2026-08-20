@@ -283,30 +283,19 @@ export const PROJECTS: IProject[] = [
 
 export const SERVICES = [
   {
-    title: 'High-Performance Frontend Architecture',
-    description: [
-      'Vanity-Free Web Components: Help companies move away from heavy framework overhead by building design systems using Lit and native Web Components.',
-      'Single - Page Application(SPA) Migrations: Transitioning legacy systems to modern, fast stacks like Vite + React or Fastify.',
-      'State Management Consulting: Implementing efficient, reactive systems using tools like Preact signals or native state management to reduce re - render cycles.',
-    ],
-    image: '/services/front.jpg',
+    type: 'systems',
+    title: 'React architecture',
+    description: 'Scalable component systems and considered interaction patterns built for long-term velocity.',
   },
   {
-    title: 'Integration & API Engineering',
-    description: [
-      'Custom Integration Middleware: Building "bridge" applications (using Node.js or Fastify) that sync data between platforms like HubSpot, Shopify, or custom CRM systems.',
-      'Automated Reporting Dashboards: Designing backend architectures that aggregate data from multiple sources into high-performance PostgreSQL or NoSQL databases for real-time visualization.',
-      'API Design & Documentation: Creating well-structured, documented REST or GraphQL APIs for startups looking to scale their infrastructure.',
-    ],
-    image: '/services/api.jpg',
+    type: 'dimension',
+    title: 'Three.js Experiences',
+    description: 'Spatial product moments that feel tactile, performant, and at home on the modern web.',
   },
   {
+    type: 'speed',
     title: 'Specialized 3D & Creative Tech',
-    description: [
-      '3D Web Experiences: Using Three.js or React Three Fiber to bring 3D models into the browser for product configurators or interactive landing pages.',
-      'Blender Pipeline Automation: Writing Python scripts to help creative agencies automate tedious tasks like texture baking, batch exporting, or asset management.',
-    ],
-    image: '/services/3d.jpg',
+    description: 'Fast-loading interfaces, motion budgets, and rendering decisions that make every interaction count.',
   },
 ]
 
