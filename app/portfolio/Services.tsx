@@ -2,6 +2,7 @@ import { PageTitle } from "~/components/PageTitle"
 import { SERVICES } from "../../lib/data"
 import { ServiceCard } from "~/components/ServiceCard"
 import { SubHeading } from "~/components/SubHeading"
+import { Tag } from "~/components/Tag"
 
 export const Services = (props: {}) => {
   return (
@@ -13,7 +14,7 @@ export const Services = (props: {}) => {
           <SubHeading text='From the first wireframe to the final frame.' />
         </header>
 
-        <div className="flex justify-between">
+        <div className="flex justify-between gap-3">
           {
             SERVICES
               .map((service, index) => (
@@ -25,6 +26,8 @@ export const Services = (props: {}) => {
               ))
           }
         </div>
+
+        <Tag text='COMPONENT SYSTEMS / SPATIAL INTERFACES / PERFORMANCE BUDGETS' />
       </div>
 
     </section>

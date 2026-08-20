@@ -283,18 +283,18 @@ export const PROJECTS: IProject[] = [
 
 export const SERVICES = [
   {
-    type: 'systems',
+    type: 'Systems',
     title: 'React architecture',
     description: 'Scalable component systems and considered interaction patterns built for long-term velocity.',
   },
   {
-    type: 'dimension',
+    type: 'Dimension',
     title: 'Three.js Experiences',
     description: 'Spatial product moments that feel tactile, performant, and at home on the modern web.',
   },
   {
-    type: 'speed',
-    title: 'Specialized 3D & Creative Tech',
+    type: 'Speed',
+    title: 'Performance engineering',
     description: 'Fast-loading interfaces, motion budgets, and rendering decisions that make every interaction count.',
   },
 ]
