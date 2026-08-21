@@ -5,6 +5,7 @@ import { PageTitle } from "~/components/PageTitle"
 import { PrimaryButton } from "~/components/PrimaryButton"
 import { Rubik } from "~/components/Rubik"
 import { RubikPanel } from "~/components/RubikPanel"
+import { ContentLayout } from "~/layouts/ContentLayout"
 import { SectionLayout } from "~/layouts/SectionLayout"
 
 export type RubikControls = "top" | "bottom" | "left" | "right" | "back" | "front" | "counter";
@@ -24,6 +25,19 @@ export const About = () => {
 
   return (
     <SectionLayout id="about" className="flex bg-p2 content text-p3">
+      <ContentLayout
+        title="Why hire me?"
+        subHeading="Senior Front-End Engineer specializing in immersive 3D web experiences"
+        className="flex-1 flex flex-col justify-around pt-10"
+      >
+        <p className="text-sm w-2/3">
+          I am a performance-driven Full-stack Developer with a unique focus on 3D
+          graphics and native web architecture. Combining rigorous backend integration
+          experience with a passion for high-end visual engineering, I deliver lean,
+          high-quality code and effective, creative solutions to complex technical challenges.
+        </p>
+        <PrimaryButton text='Hire me' />
+      </ContentLayout>
       <div
         onMouseEnter={toggleKeyboardPanel}
         onMouseLeave={toggleKeyboardPanel}
@@ -50,19 +64,6 @@ export const About = () => {
             <Rubik />
           </Canvas>
         </KeyboardControls>
-      </div>
-      <div className="flex-1 flex flex-col justify-around pt-10">
-        <header>
-          <PageTitle title='Why hire me?' />
-
-        </header>
-        <p className="text-sm w-2/3">
-          I am a performance-driven Full-stack Developer with a unique focus on 3D
-          graphics and native web architecture. Combining rigorous backend integration
-          experience with a passion for high-end visual engineering, I deliver lean,
-          high-quality code and effective, creative solutions to complex technical challenges.
-        </p>
-        <PrimaryButton text='Hire me' />
       </div>
     </SectionLayout>
   )

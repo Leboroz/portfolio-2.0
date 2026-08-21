@@ -23,12 +23,16 @@ export const ContactMe = ({ socials }: ContactMeProps) => {
 
         <Tag text="AVAILABLE FOR SELECTED PROJECTS · RESPONDS WITHIN 48H" />
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 justify-center">
           <h4 className="text-terminal-green font-kode-mono">FIND ME ELSEWHERE</h4>
           <ul className="flex gap-2">
             {socials.map((social: Social) => (
               <li key={social.name} className="bg-surface rounded-2xl aspect-square w-10 relative text-lg">
-                <a href={social.url} className="absolute top-1/2 left-1/2 -translate-1/2">
+                <a
+                  href={social.url}
+                  className="absolute top-1/2 left-1/2 -translate-1/2"
+                  target="_blank"
+                >
                   <FontAwesomeIcon icon={social.icon} />
                 </a>
               </li>

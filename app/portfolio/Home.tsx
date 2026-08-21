@@ -3,6 +3,7 @@ import { START_DATE } from "../../lib/data";
 import { PageTitle } from "~/components/PageTitle";
 import { PrimaryButton } from "~/components/PrimaryButton";
 import { Terminal, type TerminalProps } from "~/components/Terminal";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 interface HomeProps {
   title: string;
@@ -28,7 +29,9 @@ export const Home = (props: HomeProps) => {
           <PageTitle title={props.title} />
           <h1 className="h1" dangerouslySetInnerHTML={{ __html: props.heading }} />
           <p className="text-muted">{props.subHeading}</p>
-          <PrimaryButton text={props.callToAction} />
+          <a href="#contact">
+            <PrimaryButton text={props.callToAction} type="button" icon={faArrowRight} />
+          </a>
         </article>
         <Terminal {...props.terminal} className="flex-1" />
       </div>

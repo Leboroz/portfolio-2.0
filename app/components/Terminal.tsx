@@ -13,10 +13,21 @@ export interface TerminalProps {
 
 export const Terminal = ({ user, className, prompt, progress, stack }: TerminalProps) => {
   return (
-    <article className={`flex flex flex-col bg-black border border-muted rounded-2xl font-kode-mono ${className}`}>
-      <div className="flex justify-between border-b border-muted py-2 px-3">
+    <article className={`flex flex flex-col bg-atomic-black border border-terminal-line rounded-2xl font-kode-mono ${className}`}>
+      <div className="flex justify-between border-b border-terminal-line py-2 px-3">
         <span className="text-muted text-sm">{`~/${user}/portfolio`}</span>
-        <span className="relative font-kode-mono text-sm text-terminal-green before:content-['•'] before:absolute before:-left-3 before:font-bold">LIVE</span>
+        <span className="
+          relative 
+          font-kode-mono
+          font-bold text-sm
+          text-terminal-green
+          before:top-1/2
+          before:-translate-y-1/2
+          before:content-['•']
+          before:absolute
+          before:-left-3
+          before:font-bold
+          ">LIVE</span>
       </div>
 
       <div className="flex flex-col gap-3 p-6 ">

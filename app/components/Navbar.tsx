@@ -1,6 +1,6 @@
 import { faBurger } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Link } from "../../types";
 
 interface NavbarProps {
@@ -14,16 +14,8 @@ interface LinkProps {
 const Navbar = ({ links }: NavbarProps) => {
   const [showMenu, setShowMenu] = useState<boolean>(false);
   const [activeSection, setActiveSection] = useState('home');
-
-  const LinkList = ({ links }: LinkProps) => (
-    <ul className="flex gap-2 items-center">
-      {links.map((link) => (
-        <li key={link.id} className="h-fit">
-          <a className="px-2" href={`#${link.id}`}>{link.text}</a>
-        </li>
-      ))}
-    </ul>
-  )
+  const navRef = useRef<HTMLDivElement>(null);
+  const linkRefs = useRef<Map<string, HTMLAnchorElement>>(new Map());
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -43,27 +35,45 @@ const Navbar = ({ links }: NavbarProps) => {
     return () => observer.disconnect();
   }, []);
 
+
+  const activeLink = linkRefs.current.get(activeSection);
+  const containerLeft = navRef.current?.getBoundingClientRect().left || 0;
+  const linkRect = activeLink?.getBoundingClientRect();
+
+  const underlineStyle = linkRect
+    ? {
+      left: linkRect.left - containerLeft + 'px',
+      width: linkRect.width + 'px',
+    }
+    : { left: '0px', width: '0px' };
+
   const toggleMenu = () => setShowMenu((prev) => !prev);
 
   return (
-    <nav className="bg-black-100 lg:fixed lg:top-0 py-1 px-2 lg:rounded-full lg:w-full lg:z-10">
-      <button
-        onClick={toggleMenu}
-        aria-label="Toggle navigation menu"
-        className="lg:hidden"
-      >
-        <FontAwesomeIcon icon={faBurger} />
-      </button>
+    <nav ref={navRef} className="flex gap-8 fixed px-2 font-kode-mono font-bold">
+      {links.map((link) => (
+        <a
+          key={link.id}
+          href={`#${link.id}`}
+          ref={(el) => {
+            if (el) linkRefs.current.set(link.id, el);
+            else linkRefs.current.delete(link.id);
+          }}
+          className={`relative pb-2 text-sm font-medium transition-colors ${activeSection === link.id
+            ? 'text-white'
+            : 'text-muted hover:text-white'
+            }`}
+        >
+          {link.text}
+        </a>
+      ))}
 
-      <div className={showMenu ? 'hidden' : 'block' + ' lg:flex lg:justify-between'}>
-
-        <div className="flex g-1">
-
-        </div>
-
-        <LinkList links={links} />
-      </div>
-    </nav >
+      {/* Animated underline */}
+      <div
+        className="absolute bottom-0 h-[0.5px] bg-terminal-green transition-all duration-300 ease-out"
+        style={underlineStyle}
+      />
+    </nav>
   );
 };
 

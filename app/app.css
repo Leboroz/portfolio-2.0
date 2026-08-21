@@ -11,7 +11,7 @@
   --color-terminal-line: #26332A;
   --color-muted: #98A59A;
   --color-primary: #F2F7F0;
-  --color-black: #0D120E;
+  --color-atomic-black: #0D120E;
 
   --spacing-22: 88px;
   --spacing-100: 100px;
@@ -29,23 +29,24 @@
   body {
     @apply bg-ink;
 
+  @apply overflow-hidden h-full;
     @media (prefers-color-scheme: dark) {
       color-scheme: dark;
     }
   }
-  
-  main, .container { 
-    height: 100vh;
-    overflow-y: scroll;
-    scroll-snap-type: y mandatory; 
-    scroll-behavior: smooth;
-    &::-webkit-scrollbar {
-      display: none;
-    }
 
+  main,
+  .container {
+    @apply h-screen w-full max-w-full overflow-y-auto scroll-smooth snap-y snap-mandatory;
+
+    scrollbar-width: none;
     -ms-overflow-style: none;
-    scrollbar-width: none;  
   }
+
+  main::-webkit-scrollbar,
+  .container::-webkit-scrollbar {
+    display: none;
+  } 
 
   use, path {
     stroke-dasharray: none;
