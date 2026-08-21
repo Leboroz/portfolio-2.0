@@ -1,7 +1,6 @@
 import { KeyboardControls, OrbitControls, type KeyboardControlsEntry } from "@react-three/drei"
 import { Canvas } from "@react-three/fiber"
 import { useState, useMemo } from "react"
-import { PageTitle } from "~/components/PageTitle"
 import { PrimaryButton } from "~/components/PrimaryButton"
 import { Rubik } from "~/components/Rubik"
 import { RubikPanel } from "~/components/RubikPanel"
@@ -36,7 +35,7 @@ export const About = () => {
           experience with a passion for high-end visual engineering, I deliver lean,
           high-quality code and effective, creative solutions to complex technical challenges.
         </p>
-        <PrimaryButton text='Hire me' />
+        <PrimaryButton type="button" text='Hire me' />
       </ContentLayout>
       <div
         onMouseEnter={toggleKeyboardPanel}
@@ -58,7 +57,7 @@ export const About = () => {
             }}
             dpr={[1, 1.5]}
           >
-            <OrbitControls />
+            <OrbitControls enableZoom={false} />
             <directionalLight position={[1, 2, 3]} color='#285A48' intensity={4.5} />
             <ambientLight intensity={5} />
             <Rubik />
