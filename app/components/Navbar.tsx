@@ -1,15 +1,47 @@
 import { faBurger } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
-
-type Link = { href: string; text: string };
+import { useEffect, useState } from "react";
+import type { Link } from "../../types";
 
 interface NavbarProps {
   links: Link[];
 }
 
+interface LinkProps {
+  links: Link[];
+}
+
 const Navbar = ({ links }: NavbarProps) => {
   const [showMenu, setShowMenu] = useState<boolean>(false);
+  const [activeSection, setActiveSection] = useState('home');
+
+  const LinkList = ({ links }: LinkProps) => (
+    <ul className="flex gap-2 items-center">
+      {links.map((link) => (
+        <li key={link.id} className="h-fit">
+          <a className="px-2" href={`#${link.id}`}>{link.text}</a>
+        </li>
+      ))}
+    </ul>
+  )
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { threshold: 0.3, rootMargin: '-80px 0px -20% 0px' }
+    );
+
+    const sections = document.querySelectorAll('section[id]');
+    sections.forEach((section) => observer.observe(section));
+
+    return () => observer.disconnect();
+  }, []);
 
   const toggleMenu = () => setShowMenu((prev) => !prev);
 
@@ -35,13 +67,5 @@ const Navbar = ({ links }: NavbarProps) => {
   );
 };
 
-const LinkList = ({ links }) => (
-  <ul className="flex gap-2 items-center">
-    {links.map((link) => (
-      <li key={link.text} className="h-fit">
-        <a className="px-2" href={link.href}>{link.text}</a>
-      </li>
-    ))}
-  </ul>
-)
+
 export default Navbar;

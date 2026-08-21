@@ -6,10 +6,11 @@ interface SectionLayoutProps {
   title: string;
   subHeading: string;
   children?: React.ReactNode;
+  className?: string;
 }
-export const SectionLayout = ({ title, subHeading, children }: SectionLayoutProps) => {
+export const SectionLayout = ({ title, subHeading, children, className }: SectionLayoutProps) => {
   return (
-    <section id="services" className="section container">
+    <section id="services" className={`section container ${className}`}>
 
       <div className="content flex flex-col justify-center gap-7">
         <header className="flex flex-col gap-3">

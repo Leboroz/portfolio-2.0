@@ -1,5 +1,5 @@
 import { faW } from '@fortawesome/free-solid-svg-icons';
-import type { IProject, Social } from '../types';
+import type { IProject, Link, Social } from '../types';
 import { faGithubAlt, faSquareLinkedin } from "@fortawesome/free-brands-svg-icons";
 
 export const MY_STACK = {
@@ -201,29 +201,25 @@ export const SERVICES = [
   },
 ]
 
-export const LINKS = [
+export const LINKS: Link[] = [
   {
-    href: "#intro",
+    id: "intro",
     text: "Intro",
   },
   {
-    href: "#about",
+    id: "about",
     text: "About",
   },
   {
-    href: "#expertise",
-    text: "Experties",
-  },
-  {
-    href: "#services",
+    id: "services",
     text: "Services",
   },
   {
-    href: "#work",
+    id: "work",
     text: "My Work",
   },
   {
-    href: "#contact",
+    id: "contact",
     text: "Contact",
   },
 ];

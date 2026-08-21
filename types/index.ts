@@ -1,4 +1,4 @@
-import type { IconProp } from "@fortawesome/react-fontawesome";
+import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
 export type Next_Page_Url = string;
 
@@ -32,5 +32,7 @@ export interface IProject {
 export type Social = {
   name: string,
   url: string,
-  icon: IconProp,
+  icon: IconDefinition,
 }
+
+export type Link = { id: string; text: string };
