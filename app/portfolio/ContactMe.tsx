@@ -11,7 +11,7 @@ interface ContactMeProps {
 
 export const ContactMe = ({ socials }: ContactMeProps) => {
   return (
-    <SectionLayout id="contact" className="flex gap-8">
+    <SectionLayout id="contact" className="flex flex-col lg:flex-row gap-8">
       <ContentLayout
         title="03 / OPEN FOR COLLABORATION"
         subHeading="Have a complex interface in mind?"
@@ -42,7 +42,7 @@ export const ContactMe = ({ socials }: ContactMeProps) => {
 
       </ContentLayout>
 
-      <div className="flex-1 flex justify-center items-center">
+      <div className="flex-1 flex justify-center items-center pb-10">
         <ContactForm className="flex-1" />
       </div>
     </SectionLayout>

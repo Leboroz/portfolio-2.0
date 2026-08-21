@@ -23,11 +23,11 @@ export const About = () => {
   const toggleKeyboardPanel = () => setShowDisplay(prev => !prev)
 
   return (
-    <SectionLayout id="about" className="flex bg-p2 content text-p3">
+    <SectionLayout id="about" className="flex py-5">
       <ContentLayout
         title="Why hire me?"
         subHeading="Senior Front-End Engineer specializing in immersive 3D web experiences"
-        className="flex-1 flex flex-col justify-around pt-10"
+        className="flex-1 flex flex-col justify-around"
       >
         <p className="text-sm w-2/3">
           I am a performance-driven Full-stack Developer with a unique focus on 3D
@@ -40,7 +40,7 @@ export const About = () => {
       <div
         onMouseEnter={toggleKeyboardPanel}
         onMouseLeave={toggleKeyboardPanel}
-        className="flex-1 w-1/2 h-full cursor-grab relative"
+        className="flex-1 cursor-grab relative hidden lg:block"
       >
         <KeyboardControls map={keyboardControlsMap}>
           {showDisplay && <RubikPanel />}
@@ -50,9 +50,9 @@ export const About = () => {
               near: 0.1,
               far: 1000,
               position: [
-                -6.17,
-                4.14,
-                4.99,
+                -7.17,
+                6.14,
+                6.99,
               ],
             }}
             dpr={[1, 1.5]}

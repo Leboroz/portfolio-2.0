@@ -23,9 +23,9 @@ export const Home = (props: HomeProps) => {
   }, []);
 
   return (
-    <section id="intro" className="container flex items-center">
-      <div className="flex items-stretch h-fit">
-        <article className="flex flex-col flex-1 justify-between">
+    <section id="intro" className="container lg:flex pt-10 pb-10 lg:pt-0 items-center">
+      <div className="flex flex-col gap-5 lg:flex-row lg:items-stretch h-fit">
+        <article className="flex flex-col gap-5 lg:flex-1 lg:justify-between">
           <PageTitle title={props.title} />
           <h1 className="h1" dangerouslySetInnerHTML={{ __html: props.heading }} />
           <p className="text-muted">{props.subHeading}</p>

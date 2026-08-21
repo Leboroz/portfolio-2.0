@@ -10,7 +10,7 @@ export const Projects = () => {
         title='02 / SELECTED WORK'
         subHeading="A few systems I’ve helped ship."
       >
-        <div className="flex gap-3">
+        <div className="flex flex-col lg:flex-row gap-3">
           {
             PROJECTS.map((project) => (
               <ProjectCard key={project.title} {...project} />
@@ -18,7 +18,7 @@ export const Projects = () => {
           }
         </div>
 
-        <div className="rounded-2xl bg-surface p-5 flex text-terminal-green font-kode-mono text-sm">
+        <div className="rounded-2xl bg-surface p-5 flex flex-col lg:flex-row g-5 text-terminal-green font-kode-mono text-sm">
           <div className="flex flex-col flex-1 gap-1">
             <span className="font-bold text-xl">03</span>
             <span>SELECTED BUILDS</span>
