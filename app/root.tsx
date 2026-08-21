@@ -31,7 +31,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <script async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.VITE_GA_MEASUREMENT_ID}`}></script>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.VITE_GA_MEASUREMENT_ID}`}></script>
         <script
           dangerouslySetInnerHTML={{
             __html: ` 
@@ -39,7 +39,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
 
-              gtag('config', '${process.env.VITE_GA_MEASUREMENT_ID}');
+              gtag('config', '${import.meta.env.VITE_GA_MEASUREMENT_ID}');
           `}}
         >
         </script>
