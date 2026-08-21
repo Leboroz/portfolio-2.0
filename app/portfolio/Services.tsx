@@ -6,7 +6,7 @@ import { SectionLayout } from "~/layouts/SectionLayout"
 
 export const Services = () => {
   return (
-    <SectionLayout title='My Services' subHeading='From the first wireframe to the final frame.'>
+    <SectionLayout title='01 / Services' subHeading='From the first wireframe to the final frame.'>
       <div className="flex justify-between gap-3">
         {
           SERVICES
