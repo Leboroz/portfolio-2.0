@@ -13,25 +13,25 @@ export interface TerminalProps {
 
 export const Terminal = ({ user, className, prompt, progress, stack }: TerminalProps) => {
   return (
-    <article className={`flex flex flex-col bg-atomic-black border border-terminal-line rounded-2xl font-kode-mono ${className}`}>
-      <div className="flex justify-between border-b border-terminal-line py-2 px-3">
-        <span className="text-muted text-sm">{`~/${user}/portfolio`}</span>
+    <article className={`flex flex flex-col rounded-2xl border border-terminal-line bg-atomic-black font-kode-mono ${className}`}>
+      <div className="flex justify-between border-b border-terminal-line px-3 py-2">
+        <span className="text-sm text-muted">{`~/${user}/portfolio`}</span>
         <span className="
           relative 
           font-kode-mono
-          font-bold text-sm
+          text-sm font-bold
           text-terminal-green
-          before:top-1/2
-          before:-translate-y-1/2
-          before:content-['•']
           before:absolute
+          before:top-1/2
           before:-left-3
+          before:-translate-y-1/2
           before:font-bold
+          before:content-['•']
           ">LIVE</span>
       </div>
 
       <div className="flex flex-col gap-3 p-6 ">
-        <div className="text-terminal-green flex gap-2 items-center"><FontAwesomeIcon icon={faChevronRight} />{prompt}</div>
+        <div className="flex items-center gap-2 text-terminal-green"><FontAwesomeIcon icon={faChevronRight} />{prompt}</div>
         <ul className="mb-5">
           {progress.map((output: string) => (<li key={output} className="flex gap-2"><FontAwesomeIcon icon={faCheck} /> {output}</li>))}
         </ul>

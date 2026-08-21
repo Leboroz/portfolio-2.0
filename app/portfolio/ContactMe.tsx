@@ -11,7 +11,7 @@ interface ContactMeProps {
 
 export const ContactMe = ({ socials }: ContactMeProps) => {
   return (
-    <SectionLayout id="contact" className="flex flex-col lg:flex-row gap-8">
+    <SectionLayout id="contact" className="flex flex-col gap-8 lg:flex-row">
       <ContentLayout
         title="03 / OPEN FOR COLLABORATION"
         subHeading="Have a complex interface in mind?"
@@ -23,15 +23,15 @@ export const ContactMe = ({ socials }: ContactMeProps) => {
 
         <Tag text="AVAILABLE FOR SELECTED PROJECTS · RESPONDS WITHIN 48H" />
 
-        <div className="flex flex-col gap-2 justify-center">
-          <h4 className="text-terminal-green font-kode-mono">FIND ME ELSEWHERE</h4>
+        <div className="flex flex-col justify-center gap-2">
+          <h4 className="font-kode-mono text-terminal-green">FIND ME ELSEWHERE</h4>
           <ul className="flex gap-2">
             {socials.map((social: Social) => (
-              <li key={social.name} className="bg-surface rounded-2xl aspect-square w-10 relative text-lg">
+              <li key={social.name} className="relative aspect-square w-10 rounded-2xl bg-surface text-lg">
                 <a
                   href={social.url}
                   className="absolute top-1/2 left-1/2 -translate-1/2"
-                  target="_blank"
+                  target="_blank" rel="noreferrer"
                 >
                   <FontAwesomeIcon icon={social.icon} />
                 </a>
@@ -42,7 +42,7 @@ export const ContactMe = ({ socials }: ContactMeProps) => {
 
       </ContentLayout>
 
-      <div className="flex-1 flex justify-center items-center pb-10">
+      <div className="flex flex-1 items-center justify-center pb-10">
         <ContactForm className="flex-1" />
       </div>
     </SectionLayout>

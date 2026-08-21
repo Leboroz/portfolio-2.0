@@ -12,7 +12,7 @@ export const PrimaryButton = ({ text, type, disabled = false, icon, className }:
   return (
     <button
       type={type}
-      className={`w-fit cursor-pointer rounded-full font-kode-mono font-bold bg-terminal-green text-ink flex gap-3 items-center px-4 py-2 ${className}`}
+      className={`flex w-fit cursor-pointer items-center gap-3 rounded-full bg-terminal-green px-4 py-2 font-kode-mono font-bold text-ink ${className}`}
       disabled={disabled}
     >
       {text}{icon ? <FontAwesomeIcon icon={icon!} /> : null}

@@ -27,9 +27,9 @@ export const About = () => {
       <ContentLayout
         title="Why hire me?"
         subHeading="Senior Front-End Engineer specializing in immersive 3D web experiences"
-        className="flex-1 flex flex-col justify-around"
+        className="flex flex-1 flex-col justify-around"
       >
-        <p className="text-sm w-2/3">
+        <p className="w-2/3 text-sm">
           I am a performance-driven Full-stack Developer with a unique focus on 3D
           graphics and native web architecture. Combining rigorous backend integration
           experience with a passion for high-end visual engineering, I deliver lean,
@@ -40,7 +40,7 @@ export const About = () => {
       <div
         onMouseEnter={toggleKeyboardPanel}
         onMouseLeave={toggleKeyboardPanel}
-        className="flex-1 cursor-grab relative hidden lg:block"
+        className="relative hidden flex-1 cursor-grab lg:block"
       >
         <KeyboardControls map={keyboardControlsMap}>
           {showDisplay && <RubikPanel />}

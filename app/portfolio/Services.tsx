@@ -9,7 +9,7 @@ export const Services = () => {
   return (
     <SectionLayout id="services">
       <ContentLayout title='01 / Services' subHeading='From the first wireframe to the final frame.'>
-        <div className="flex flex-col lg:flex-row justify-between gap-3">
+        <div className="flex flex-col justify-between gap-3 lg:flex-row">
           {
             SERVICES
               .map((service, index) => (

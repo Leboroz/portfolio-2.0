@@ -177,6 +177,7 @@ export const PROJECTS: IProject[] = [
       'SASS',
     ],
     liveUrl: 'https://renturtechrender.netlify.app/',
+    sourceCode: 'https://renturtechrender.netlify.app/',
     year: 2023,
     summary: 'A React + Redux web app for browsing, reserving, and managing equipment rentals with user authentication and a clean, responsive interface.',
     description: 'A full-stack web application that allows users to browse, reserve, and manage equipment rentals for specific time periods. Built with React and Redux on the frontend, it includes user authentication, protected reservation management, and a clean, responsive UI. The project is connected to a Ruby on Rails backend and follows a modern rental marketplace workflow.',

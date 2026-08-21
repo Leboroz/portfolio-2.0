@@ -13,7 +13,7 @@ export const ServiceCard = ({ type, title, description }: ServiceCardProps) => {
     <div
       onMouseEnter={() => setServiceHover(true)}
       onMouseLeave={() => setServiceHover(false)}
-      className="relative bg-surface rounded-2xl p-5 flex-1 flex flex-col gap-3"
+      className="relative flex flex-1 flex-col gap-3 rounded-2xl bg-surface p-5"
     >
       <PageTitle title={type} />
       <h2 className="text-[20px] font-bold">{title}</h2>

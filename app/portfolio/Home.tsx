@@ -23,8 +23,8 @@ export const Home = (props: HomeProps) => {
   }, []);
 
   return (
-    <section id="intro" className="container lg:flex pt-10 pb-10 lg:pt-0 items-center">
-      <div className="flex flex-col gap-5 lg:flex-row lg:items-stretch h-fit">
+    <section id="intro" className="container items-center py-10 lg:flex lg:pt-0">
+      <div className="flex h-fit flex-col gap-5 lg:flex-row lg:items-stretch">
         <article className="flex flex-col gap-5 lg:flex-1 lg:justify-between">
           <PageTitle title={props.title} />
           <h1 className="h1" dangerouslySetInnerHTML={{ __html: props.heading }} />

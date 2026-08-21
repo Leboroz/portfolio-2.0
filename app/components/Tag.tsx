@@ -7,7 +7,7 @@ interface TagProps {
 
 export const Tag = ({ text }: TagProps) => {
   return (
-    <span className="bg-atomic-black h3 text-terminal-green rounded-2xl py-4 px-5">
+    <span className="h3 rounded-2xl bg-atomic-black px-5 py-4 text-terminal-green">
       <FontAwesomeIcon icon={faCheck} /> {' ' + text}
     </span>
   )

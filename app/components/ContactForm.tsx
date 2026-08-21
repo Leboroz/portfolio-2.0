@@ -13,7 +13,7 @@ export function ContactForm({ className }: ContactFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className={`bg-surface rounded-2xl flex flex-col gap-5 p-5 ${className}`}>
+    <form onSubmit={handleSubmit} className={`flex flex-col gap-5 rounded-2xl bg-surface p-5 ${className}`}>
       <label className='h3 text-terminal-green' htmlFor="email">
         NAME
       </label>
@@ -22,7 +22,7 @@ export function ContactForm({ className }: ContactFormProps) {
         type="text"
         name="name"
         placeholder='Your name :)'
-        className='bg-atomic-black border border-terminal-line rounded-lg p-3'
+        className='rounded-lg border border-terminal-line bg-atomic-black p-3'
       />
       <ValidationError
         prefix="Name"
@@ -37,7 +37,7 @@ export function ContactForm({ className }: ContactFormProps) {
         type="email"
         name="email"
         placeholder='you@company.com'
-        className='bg-atomic-black border border-terminal-line rounded-lg p-3'
+        className='rounded-lg border border-terminal-line bg-atomic-black p-3'
       />
       <ValidationError
         prefix="Email"
@@ -51,7 +51,7 @@ export function ContactForm({ className }: ContactFormProps) {
         id="message"
         name="message"
         placeholder="Tell me what you're building..."
-        className='bg-atomic-black border border-terminal-line rounded-lg p-3'
+        className='rounded-lg border border-terminal-line bg-atomic-black p-3'
       />
       <ValidationError
         prefix="Message"
@@ -62,7 +62,7 @@ export function ContactForm({ className }: ContactFormProps) {
         text='Send message'
         type='submit'
         disabled={state.submitting}
-        className='w-full flex justify-center'
+        className='flex w-full justify-center'
       />
     </form>
   );

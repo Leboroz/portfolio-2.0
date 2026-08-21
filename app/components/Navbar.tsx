@@ -50,7 +50,7 @@ const Navbar = ({ links }: NavbarProps) => {
   const toggleMenu = () => setShowMenu((prev) => !prev);
 
   return (
-    <nav ref={navRef} className="flex gap-8 fixed px-2 font-kode-mono font-bold">
+    <nav ref={navRef} className="fixed flex gap-8 px-2 font-kode-mono font-bold">
       {links.map((link) => (
         <a
           key={link.id}
