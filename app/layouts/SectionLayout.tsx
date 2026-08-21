@@ -1,26 +1,14 @@
-
-import { PageTitle } from "~/components/PageTitle"
-import { SubHeading } from "~/components/SubHeading"
+import type { ReactNode } from "react"
 
 interface SectionLayoutProps {
-  title: string;
-  subHeading: string;
-  children?: React.ReactNode;
+  children: ReactNode | ReactNode[];
+  id: string;
   className?: string;
 }
-export const SectionLayout = ({ title, subHeading, children, className }: SectionLayoutProps) => {
+export const SectionLayout = ({ children, id, className }: SectionLayoutProps) => {
   return (
-    <section id="services" className={`section container ${className}`}>
-
-      <div className="content flex flex-col justify-center gap-7">
-        <header className="flex flex-col gap-3">
-          <PageTitle title={title} />
-          <SubHeading text={subHeading} />
-        </header>
-
-        {children}
-      </div>
-
-    </section >
+    <section id={id} className={`section container ${className}`}>
+      {children}
+    </section>
   )
 }

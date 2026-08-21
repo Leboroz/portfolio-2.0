@@ -1,8 +1,9 @@
 import { Tag } from "~/components/Tag"
-import { SectionLayout } from "~/layouts/SectionLayout"
-import type { Social } from "../../types"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ContactForm } from "~/components/ContactForm";
+import { SectionLayout } from "~/layouts/SectionLayout";
+import { ContentLayout } from "~/layouts/ContentLayout"
+import type { Social } from "../../types"
 
 interface ContactMeProps {
   socials: Social[];
@@ -10,8 +11,8 @@ interface ContactMeProps {
 
 export const ContactMe = ({ socials }: ContactMeProps) => {
   return (
-    <div className="flex ">
-      <SectionLayout
+    <SectionLayout id="contact" className="flex gap-8">
+      <ContentLayout
         title="03 / OPEN FOR COLLABORATION"
         subHeading="Have a complex interface in mind?"
         className="flex-1"
@@ -26,7 +27,7 @@ export const ContactMe = ({ socials }: ContactMeProps) => {
           <h4 className="text-terminal-green font-kode-mono">FIND ME ELSEWHERE</h4>
           <ul className="flex gap-2">
             {socials.map((social: Social) => (
-              <li className="bg-surface rounded-2xl aspect-square w-10 relative text-lg">
+              <li key={social.name} className="bg-surface rounded-2xl aspect-square w-10 relative text-lg">
                 <a href={social.url} className="absolute top-1/2 left-1/2 -translate-1/2">
                   <FontAwesomeIcon icon={social.icon} />
                 </a>
@@ -35,11 +36,11 @@ export const ContactMe = ({ socials }: ContactMeProps) => {
           </ul>
         </div>
 
-      </SectionLayout>
+      </ContentLayout>
 
-      <div className="">
+      <div className="flex-1 flex justify-center items-center">
         <ContactForm className="flex-1" />
       </div>
-    </div>
+    </SectionLayout>
   )
 }

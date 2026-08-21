@@ -5,6 +5,7 @@ import { PageTitle } from "~/components/PageTitle"
 import { PrimaryButton } from "~/components/PrimaryButton"
 import { Rubik } from "~/components/Rubik"
 import { RubikPanel } from "~/components/RubikPanel"
+import { SectionLayout } from "~/layouts/SectionLayout"
 
 export type RubikControls = "top" | "bottom" | "left" | "right" | "back" | "front" | "counter";
 
@@ -22,7 +23,7 @@ export const About = () => {
   const toggleKeyboardPanel = () => setShowDisplay(prev => !prev)
 
   return (
-    <section id="about" className="section container flex bg-p2 content text-p3">
+    <SectionLayout id="about" className="flex bg-p2 content text-p3">
       <div
         onMouseEnter={toggleKeyboardPanel}
         onMouseLeave={toggleKeyboardPanel}
@@ -63,7 +64,7 @@ export const About = () => {
         </p>
         <PrimaryButton text='Hire me' />
       </div>
-    </section>
+    </SectionLayout>
   )
 }
 

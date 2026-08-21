@@ -22,12 +22,12 @@ export const Terminal = ({ user, className, prompt, progress, stack }: TerminalP
       <div className="flex flex-col gap-3 p-6 ">
         <div className="text-terminal-green flex gap-2 items-center"><FontAwesomeIcon icon={faChevronRight} />{prompt}</div>
         <ul className="mb-5">
-          {progress.map((output: string) => (<li className="flex gap-2"><FontAwesomeIcon icon={faCheck} /> {output}</li>))}
+          {progress.map((output: string) => (<li key={output} className="flex gap-2"><FontAwesomeIcon icon={faCheck} /> {output}</li>))}
         </ul>
         <ul className="flex flex-wrap gap-3">
           {
             stack.map((tech: Tech) => (
-              <li>
+              <li key={tech.name}>
                 <img className="aspect-square w-10 object-contain" src={tech.icon} alt={tech.name} />
               </li>
             ))
