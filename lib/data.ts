@@ -1,4 +1,6 @@
-import type { IProject } from '../types';
+import { faW } from '@fortawesome/free-solid-svg-icons';
+import type { IProject, Social } from '../types';
+import { faGithubAlt, faSquareLinkedin } from "@fortawesome/free-brands-svg-icons";
 
 export const MY_STACK = {
   frontend: [
@@ -99,10 +101,10 @@ export const HOME_TITLE = {
     stack: MY_STACK.frontend,
   },
 }
-
-export const SOCIAL_LINKS = [
-  { name: 'github', url: 'https://github.com/Leboroz' },
-  { name: 'linkedin', url: 'https://www.linkedin.com/in/leboroz' },
+export const SOCIAL_LINKS: Social[] = [
+  { name: 'github', url: 'https://github.com/Leboroz', icon: faGithubAlt },
+  { name: 'linkedin', url: 'https://www.linkedin.com/in/leboroz', icon: faSquareLinkedin },
+  { name: 'Wellfound', url: 'https://wellfound.com/u/leonardo-albornoz', icon: faW },
 ];
 
 export const PROJECTS: IProject[] = [

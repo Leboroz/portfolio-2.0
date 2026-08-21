@@ -2,8 +2,8 @@ import { About } from "./About";
 import { Services } from "./Services";
 import { Home } from "./Home";
 import { Projects } from "./Projects";
-
-import { HOME_TITLE } from "../../lib/data";
+import { ContactMe } from "./ContactMe";
+import { HOME_TITLE, SOCIAL_LINKS } from "../../lib/data";
 
 
 export function Portfolio() {
@@ -13,6 +13,7 @@ export function Portfolio() {
       <About />
       <Services />
       <Projects />
+      <ContactMe socials={SOCIAL_LINKS} />
     </>
   );
 }

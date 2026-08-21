@@ -1,3 +1,5 @@
+import type { IconProp } from "@fortawesome/react-fontawesome";
+
 export type Next_Page_Url = string;
 
 export type Tech = {
@@ -25,4 +27,10 @@ export interface IProject {
   techStack: string[];
   liveUrl?: string;
   sourceCode?: string;
+}
+
+export type Social = {
+  name: string,
+  url: string,
+  icon: IconProp,
 }
