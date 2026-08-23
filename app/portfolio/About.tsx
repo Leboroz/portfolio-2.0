@@ -26,7 +26,7 @@ export const About = () => {
     <SectionLayout id="about" className="flex py-5">
       <ContentLayout
         title="Why hire me?"
-        subHeading="Senior Front-End Engineer specializing in immersive 3D web experiences"
+        subHeading="Senior Full-Stack End Engineer specializing in immersive 3D web experiences"
         className="flex flex-1 flex-col justify-around"
       >
         <p className="w-2/3 text-sm">
