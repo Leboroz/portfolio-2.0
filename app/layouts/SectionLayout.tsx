@@ -7,7 +7,7 @@ interface SectionLayoutProps {
 }
 export const SectionLayout = ({ children, id, className }: SectionLayoutProps) => {
   return (
-    <section id={id} className={`section container ${className}`}>
+    <section id={id} className={`section animate-slide container ${className}`}>
       {children}
     </section>
   )

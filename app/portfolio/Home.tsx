@@ -4,6 +4,7 @@ import { PageTitle } from "~/components/PageTitle";
 import { PrimaryButton } from "~/components/PrimaryButton";
 import { Terminal, type TerminalProps } from "~/components/Terminal";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { ContentLayout } from "~/layouts/ContentLayout";
 
 interface HomeProps {
   title: string;
@@ -15,16 +16,9 @@ interface HomeProps {
 
 export const Home = (props: HomeProps) => {
 
-  const yearsOfExperience = useMemo(() => {
-    const startDate = new Date(START_DATE);
-    const today = new Date();
-
-    return today.getFullYear() - startDate.getFullYear();
-  }, []);
-
   return (
-    <section id="intro" className="container items-center py-10 lg:flex lg:pt-0">
-      <div className="flex h-fit flex-col gap-5 lg:flex-row lg:items-stretch">
+    <section id="intro" className="section animate-slide container items-center py-10 lg:flex lg:pt-0">
+      <ContentLayout className="flex h-fit flex-col gap-5 lg:flex-row lg:items-stretch">
         <article className="flex flex-col gap-5 lg:flex-1 lg:justify-between">
           <PageTitle title={props.title} />
           <h1 className="h1" dangerouslySetInnerHTML={{ __html: props.heading }} />
@@ -34,7 +28,7 @@ export const Home = (props: HomeProps) => {
           </a>
         </article>
         <Terminal {...props.terminal} className="flex-1" />
-      </div>
+      </ContentLayout>
     </section>
   )
 }

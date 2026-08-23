@@ -35,9 +35,8 @@
     }
   }
 
-  main,
   .container {
-    @apply lg:h-screen w-full max-w-full overflow-y-auto scroll-smooth lg:snap-y lg:snap-mandatory;
+    @apply lg:h-screen w-full max-w-full lg:flex lg:items-stretch;
 
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -90,7 +89,7 @@
   }
 
   .content {
-    @apply  w-full lg:h-full pt-10 pb-10 lg:pt-37 lg:pb-20;
+    /* @apply  w-full lg:h-full pt-10 pb-10 lg:pt-37 lg:pb-20; */
   }
 
   .h1, .h2, .h3, .h4, .h5, .h6 {

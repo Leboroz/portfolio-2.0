@@ -29,7 +29,7 @@ export const About = () => {
         subHeading="Senior Full-Stack End Engineer specializing in immersive 3D web experiences"
         className="flex flex-1 flex-col justify-around"
       >
-        <p className="w-2/3 text-sm">
+        <p className="w-2/3 text-sm text-muted">
           I am a performance-driven Full-stack Developer with a unique focus on 3D
           graphics and native web architecture. Combining rigorous backend integration
           experience with a passion for high-end visual engineering, I deliver lean,
