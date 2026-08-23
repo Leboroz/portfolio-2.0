@@ -86,7 +86,7 @@ export const MY_STACK = {
 };
 
 export const HOME_TITLE = {
-  title: 'SENIOR FRONTEND ENGINEER',
+  title: 'SENIOR FULL-STACK ENGINEER',
   heading: 'I build<br />interfaces that<br /> feel alive.',
   subHeading: 'React specialist shaping high-performance digital products where systems thinking meets visual depth.',
   callToAction: "Let's start a conversation",
@@ -98,7 +98,7 @@ export const HOME_TITLE = {
       'Three.js scenes tuned for real humans and real devices',
       'Clean code and beautiful interfaces',
     ],
-    stack: MY_STACK.frontend,
+    stack: [...MY_STACK.frontend, ...MY_STACK.backend, ...MY_STACK.database, ...MY_STACK.tools],
   },
 }
 export const SOCIAL_LINKS: Social[] = [
