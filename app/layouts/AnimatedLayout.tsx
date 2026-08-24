@@ -1,5 +1,5 @@
 import { useRef, type ReactNode } from 'react';
-import gsap from 'gsap';
+import { gsap } from "gsap/dist/gsap";
 import { useGSAP } from '@gsap/react';
 
 interface AnimatedLayoutProps {
@@ -10,7 +10,7 @@ export default function AnimatedLayout({ children }: AnimatedLayoutProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    import("gsap/ScrollTrigger").then((mod) => {
+    import("gsap/dist/ScrollTrigger").then((mod) => {
       const ScrollTrigger = mod.ScrollTrigger || mod.default;
       gsap.registerPlugin(ScrollTrigger);
 
