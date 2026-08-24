@@ -68,8 +68,3 @@ export const About = () => {
   )
 }
 
-const QuatityBadge = () => (
-  <div>
-
-  </div>
-);
