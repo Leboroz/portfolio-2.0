@@ -30,10 +30,7 @@ export const About = () => {
         className="flex flex-1 flex-col justify-around"
       >
         <p className="w-2/3 text-sm text-muted">
-          I am a performance-driven Full-stack Developer with a unique focus on 3D
-          graphics and native web architecture. Combining rigorous backend integration
-          experience with a passion for high-end visual engineering, I deliver lean,
-          high-quality code and effective, creative solutions to complex technical challenges.
+          I am a full-stack software engineer passionate about building robust, scalable web applications from end to end. With a strong foundation in the JavaScript and TypeScript ecosystems, including React and Node.js, I specialize in turning complex requirements into clean, maintainable solutions. Having worked extensively in remote environments—from developing complex reporting systems and data pipelines to integrating third-party APIs—I bring both technical adaptability and a collaborative, problem-solving mindset to every engineering challenge.
         </p>
         <PrimaryButton type="button" text='Hire me' />
       </ContentLayout>
