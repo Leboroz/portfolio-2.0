@@ -3,8 +3,8 @@ import { PageTitle } from "~/components/PageTitle"
 import { SubHeading } from "~/components/SubHeading"
 
 interface ContentLayoutProps {
-  title: string;
-  subHeading: string;
+  title?: string;
+  subHeading?: string;
   children: ReactNode[] | ReactNode;
   className?: string;
 }
