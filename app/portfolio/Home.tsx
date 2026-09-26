@@ -1,5 +1,3 @@
-import { useMemo, useState } from "react";
-import { START_DATE } from "../../lib/data";
 import { PageTitle } from "~/components/PageTitle";
 import { PrimaryButton } from "~/components/PrimaryButton";
 import { Terminal, type TerminalProps } from "~/components/Terminal";
