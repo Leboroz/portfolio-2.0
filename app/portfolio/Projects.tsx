@@ -21,7 +21,7 @@ export const Projects = () => {
         title='02 / SELECTED WORK'
         subHeading="A few systems I’ve ship."
       >
-        <div className="grid grid-cols-3 gap-3 lg:flex-row lg:flex-wrap lg:overflow-y-scroll">
+        <div className="grid gap-3 gap-4 lg:grid-cols-3 lg:flex-row lg:flex-wrap lg:overflow-y-scroll">
           {
             projects.map((project) => (
               <ProjectCard key={project.title} {...project} />
