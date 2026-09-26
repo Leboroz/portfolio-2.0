@@ -26,13 +26,15 @@ export const About = () => {
     <SectionLayout id="about" className="flex py-5">
       <ContentLayout
         title="Why hire me?"
-        subHeading="Senior Full-Stack End Engineer specializing in immersive 3D web experiences"
+        subHeading="Senior Full-Stack End Engineer specializing in immersive web experiences"
         className="flex flex-1 flex-col justify-around"
       >
         <p className="w-2/3 text-sm text-muted">
           I am a full-stack software engineer passionate about building robust, scalable web applications from end to end. With a strong foundation in the JavaScript and TypeScript ecosystems, including React and Node.js, I specialize in turning complex requirements into clean, maintainable solutions. Having worked extensively in remote environments—from developing complex reporting systems and data pipelines to integrating third-party APIs—I bring both technical adaptability and a collaborative, problem-solving mindset to every engineering challenge.
         </p>
-        <PrimaryButton type="button" text='Hire me' />
+        <a href="#contact">
+          <PrimaryButton type="button" text='Hire me' />
+        </a>
       </ContentLayout>
       <div
         onMouseEnter={toggleKeyboardPanel}
