@@ -18,7 +18,7 @@ export const Home = (props: HomeProps) => {
   return (
     <SectionLayout id="intro">
       <ContentLayout>
-        <div className="flex">
+        <div className="flex flex-col gap-4 lg:flex-row">
           <article className="flex flex-col gap-5 lg:flex-1 lg:justify-between">
             <PageTitle title={props.title} />
             <h1 className="h1" dangerouslySetInnerHTML={{ __html: props.heading }} />
