@@ -9,6 +9,9 @@ interface ProjectCardProps {
 }
 
 export const ProjectCard = ({ title, description, techStack, sourceCode, liveUrl }: ProjectCardProps) => {
+  if (title.includes('-')) {
+    title = title.split('-').join(' ');
+  }
   return (
     <article className="flex flex-col gap-3 rounded-2xl bg-surface p-5">
       <div className="
@@ -22,7 +25,7 @@ export const ProjectCard = ({ title, description, techStack, sourceCode, liveUrl
         ">
         <img src='/logo/react.png' alt="react logo" />
       </div>
-      <h3 className="font-kode-mono text-xl font-bold">{title}</h3>
+      <h3 className="font-kode-mono text-xl font-bold capitalize">{title}</h3>
       <p className="
         line-clamp-3
         h-[70px] 
