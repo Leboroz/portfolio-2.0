@@ -29,17 +29,10 @@
   body {
     @apply bg-ink;
 
-    @apply lg:overflow-hidden lg:h-full;
+    @apply lg:h-full;
     @media (prefers-color-scheme: dark) {
       color-scheme: dark;
     }
-  }
-
-  .container {
-    @apply lg:h-screen w-full max-w-full lg:flex lg:items-stretch;
-
-    scrollbar-width: none;
-    -ms-overflow-style: none;
   }
 
 
@@ -49,7 +42,7 @@
   }
 
   section {
-    @apply h-full w-full overflow-auto lg:snap-start lg:snap-always border-b border-terminal-line lg:border-b-0;
+    @apply overflow-auto  lg:snap-start lg:snap-always border-b border-terminal-line lg:border-b-0 lg:h-screen w-full lg:flex lg:items-stretch ;
   }
 
 

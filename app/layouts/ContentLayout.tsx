@@ -10,7 +10,7 @@ interface ContentLayoutProps {
 }
 export const ContentLayout = ({ title, subHeading, children, className }: ContentLayoutProps) => {
   return (
-    <div className={`content flex flex-col justify-center gap-7 py-22 ${className}`}>
+    <div className={`flex max-w-255 flex-col  justify-center gap-7 px-6 py-22 ${className}`}>
       <header className="flex flex-col gap-3">
         {title && <PageTitle title={title} />}
         {subHeading && <SubHeading text={subHeading} />}

@@ -18,10 +18,10 @@ export const Home = (props: HomeProps) => {
   return (
     <SectionLayout id="intro">
       <ContentLayout>
-        <div className="flex flex-col gap-4 lg:flex-row">
-          <article className="flex flex-col gap-5 lg:flex-1 lg:justify-between">
+        <div className="flex h-full flex-col gap-4 lg:flex-row lg:py-20">
+          <article className="flex flex-col gap-8 lg:flex-1 ">
             <PageTitle title={props.title} />
-            <h1 className="h1" dangerouslySetInnerHTML={{ __html: props.heading }} />
+            <h1 className="h1 relative" dangerouslySetInnerHTML={{ __html: props.heading }} />
             <p className="text-muted">{props.subHeading}</p>
             <a href="#contact">
               <PrimaryButton text={props.callToAction} type="button" icon={faArrowRight} />
